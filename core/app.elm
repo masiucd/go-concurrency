@@ -1,3 +1,15 @@
+import Html exposing (text)
+
+main =
+  divide 5 1000
+    |> text
+
+divide a b =
+  a / b
+    |> toString
+
+
+
 -- OPERATORS
 
 1
@@ -10,3 +22,9 @@
 10^3 -- EXPONANTIONAL
 
 -- FUNNCTIONS
+
+--name --arg
+devideByTwo: Float -> Float
+devideByTwo n =
+  n / 2
+-- body
