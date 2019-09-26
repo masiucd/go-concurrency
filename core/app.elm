@@ -1,0 +1,12 @@
+-- OPERATORS
+
+1
+1 + 2 * 4
+
+5 < 6
+10 > 3
+10 == 10
+10 /= 9 -- NOT EQUAL TO
+10^3 -- EXPONANTIONAL
+
+-- FUNNCTIONS
