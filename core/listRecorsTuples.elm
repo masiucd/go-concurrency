@@ -20,3 +20,10 @@ mike.last
 mike.age
 
 .last
+
+
+primes [2,3,4,5]
+
+calculationResult = (True, 32)
+
+point = {x = 45, y = 21}
