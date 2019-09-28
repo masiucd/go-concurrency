@@ -1,3 +1,4 @@
+import Html exposing (..)
 names = ["aleks","boris","karol"]
 nums = [1,2,3,4,5,6,7,0]
 
@@ -27,3 +28,14 @@ primes [2,3,4,5]
 calculationResult = (True, 32)
 
 point = {x = 45, y = 21}
+
+-- function
+pluralize singular plural quantitiy =
+  if quantitiy == 1 then
+    singular
+  else
+    plural
+
+main =
+  text (pluralize "leaf" , "leaves", 1)
+  text (pluralize "leaf" , "leaves", 2)
