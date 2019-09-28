@@ -1,0 +1,6 @@
+node_modules
+elm.js
+Auth.elm
+generated-code
+build-artifacts
+*.log
