@@ -1,53 +1,61 @@
+module Main exposing (..)
+
 import Browser
-import Html exposing (Html, Attribute, div, input, text)
+import Html exposing (Attribute, Html, div, input, text)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 
 
-
--- MAIN
-
-
 main =
-  Browser.sandbox { init = init, update = update, view = view }
+    Browser.sandbox { init = init, update = update, view = view }
 
 
 
--- MODEL
+-- Custom state type, what the stae shou be and what ELM expects
 
 
 type alias Model =
-  { content : String
-  }
+    { value : String
+    }
+
+
+
+-- State
 
 
 init : Model
 init =
-  { content = "" }
+    { value = "" }
 
 
 
--- UPDATE
+-- Actions
 
 
 type Msg
-  = Change String
+    = Change String
+
+
+
+-- , Update ,Reducers
 
 
 update : Msg -> Model -> Model
 update msg model =
-  case msg of
-    Change newContent ->
-      { model | content = newContent }
+    case msg of
+        Change newConent ->
+            { model | value = newConent }
 
 
 
--- VIEW
+-- View
 
 
 view : Model -> Html Msg
 view model =
-  div []
-    [ input [ placeholder "Text to reverse", value model.content, onInput Change ] []
-    , div [] [ text (String.reverse model.content) ]
-    ]
+    div []
+        [ input [ placeholder "Enter something", value model.value, onInput Change ] []
+
+        -- , div [] [ text (String.repeat 5 (String.toUpper (String.reverse model.value))) ]
+        , div [] [ text (String.repeat 5 <| String.toUpper <| String.reverse model.value) ]
+        ]

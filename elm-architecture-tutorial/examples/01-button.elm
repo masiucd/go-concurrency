@@ -1,4 +1,4 @@
-module Main exposing (main)
+module Main exposing (..)
 
 import Browser
 import Html exposing (Html, button, div, text)
@@ -15,36 +15,33 @@ type alias Model =
 
 init : Model
 init =
-    0
-
-
-
--- update
+    5
 
 
 type Msg
-    = Increment
-    | Decrement
+    = Increase
+    | Decrease
+    | Reset
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Increment ->
+        Increase ->
             model + 1
 
-        Decrement ->
+        Decrease ->
             model - 1
 
-
-
--- view
+        Reset ->
+            5
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick Decrement ] [ text "-" ]
+        [ button [ onClick Decrease ] [ text "-" ]
         , div [] [ text (String.fromInt model) ]
-        , button [ onClick Increment ] [ text "+" ]
+        , button [ onClick Increase ] [ text "+" ]
+        , button [ onClick Reset ] [ text "Reset" ]
         ]
