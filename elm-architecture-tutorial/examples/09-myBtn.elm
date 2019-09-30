@@ -1,4 +1,4 @@
-module Main exposing (Model, Msg(..), init, main, update, view)
+module Main exposing (..)
 
 import Browser
 import Html exposing (Html, button, div, text)
@@ -7,10 +7,6 @@ import Html.Events exposing (onClick)
 
 main =
     Browser.sandbox { init = init, update = update, view = view }
-
-
-
--- MODEL
 
 
 type alias Model =
@@ -22,33 +18,30 @@ init =
     0
 
 
-
--- UPDATE
-
-
 type Msg
-    = Increment
-    | Decrement
+    = Add
+    | Dec
+    | Reset
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Increment ->
+        Add ->
             model + 1
 
-        Decrement ->
+        Dec ->
             model - 1
 
-
-
--- VIEW
+        Reset ->
+            0
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick Decrement ] [ text "-" ]
+        [ button [ onClick Add ] [ text "+" ]
         , div [] [ text (String.fromInt model) ]
-        , button [ onClick Increment ] [ text "+" ]
+        , button [ onClick Dec ] [ text "-" ]
+        , button [ onClick Reset ] [ text "Reset" ]
         ]
