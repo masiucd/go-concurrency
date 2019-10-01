@@ -20,8 +20,8 @@ init =
 
 type Msg
     = Add
-    | Dec
-    | Reset
+    | Sub
+    | Rec
 
 
 update : Msg -> Model -> Model
@@ -30,10 +30,10 @@ update msg model =
         Add ->
             model + 1
 
-        Dec ->
+        Sub ->
             model - 1
 
-        Reset ->
+        Rec ->
             0
 
 
@@ -42,6 +42,6 @@ view model =
     div []
         [ button [ onClick Add ] [ text "+" ]
         , div [] [ text (String.fromInt model) ]
-        , button [ onClick Dec ] [ text "-" ]
-        , button [ onClick Reset ] [ text "Reset" ]
+        , button [ onClick Sub ] [ text "-" ]
+        , button [ onClick Rec ] [ text "0" ]
         ]

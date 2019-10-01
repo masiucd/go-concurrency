@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Main exposing (Model, Msg(..), init, main, update, view, viewInput, viewValidation)
 
 import Browser
 import Html exposing (..)
@@ -6,28 +6,38 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 
 
+
+-- MAIN
+
+
 main =
     Browser.sandbox { init = init, update = update, view = view }
+
+
+
+-- MODEL
 
 
 type alias Model =
     { name : String
     , password : String
     , passwordAgain : String
-    , age : Int
     }
 
 
 init : Model
 init =
-    Model "" "" "" 0
+    Model "" "" ""
+
+
+
+-- UPDATE
 
 
 type Msg
     = Name String
     | Password String
     | PasswordAgain String
-    | Age Int
 
 
 update : Msg -> Model -> Model
@@ -42,8 +52,9 @@ update msg model =
         PasswordAgain password ->
             { model | passwordAgain = password }
 
-        Age age ->
-            { model | age = age }
+
+
+-- VIEW
 
 
 view : Model -> Html Msg
@@ -52,8 +63,8 @@ view model =
         [ viewInput "text" "Name" model.name Name
         , viewInput "password" "Password" model.password Password
         , viewInput "password" "Re-enter Password" model.passwordAgain PasswordAgain
-        , viewInput2 "text" "enter your age" (String.fromInt model.age) Age
         , viewValidation model
+        , viewValidation2 model
         ]
 
 
@@ -62,15 +73,19 @@ viewInput t p v toMsg =
     input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
 
-viewInput2 : String -> String -> String -> (Int -> msg) -> Html msg
-viewInput2 t p v toAge =
-    input [ type_ t, placeholder p, value v, onInput toAge ] []
-
-
 viewValidation : Model -> Html msg
 viewValidation model =
-    if model.password == model.passwordAgain then
-        div [ style "color" "green" ] [ text "OK" ]
+    if String.length model.password < 8 then
+        div [ style "color" "red" ] [ text "to short" ]
 
     else
-        div [ style "color" "red" ] [ text "Passwords do not match!" ]
+        div [ style "color" "green" ] [ text "OK" ]
+
+
+viewValidation2 : Model -> Html msg
+viewValidation2 model =
+    if model.password == model.passwordAgain then
+        div [ style "color" "green" ] [ text "Nice work mate" ]
+
+    else
+        div [ style "color" "red" ] [ text "password don't match" ]
