@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Main exposing (Model, main)
 
 import Browser
 import Html exposing (Html, button, div, text)
@@ -19,29 +19,24 @@ init =
 
 
 type Msg
-    = Add
-    | Sub
-    | Rec
+    = Increment
+    | Decrement
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Add ->
+        Increment ->
             model + 1
 
-        Sub ->
+        Decrement ->
             model - 1
-
-        Rec ->
-            0
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick Add ] [ text "+" ]
+        [ button [ onClick Increment ] [ text "+" ]
         , div [] [ text (String.fromInt model) ]
-        , button [ onClick Sub ] [ text "-" ]
-        , button [ onClick Rec ] [ text "0" ]
+        , button [ onClick Decrement ] [ text "-" ]
         ]
