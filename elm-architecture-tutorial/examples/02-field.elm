@@ -1,4 +1,4 @@
-module Main exposing (..)
+module Main exposing (main)
 
 import Browser
 import Html exposing (Attribute, Html, div, input, text)
@@ -10,52 +10,34 @@ main =
     Browser.sandbox { init = init, update = update, view = view }
 
 
-
--- Custom state type, what the stae shou be and what ELM expects
-
-
 type alias Model =
-    { value : String
-    }
-
-
-
--- State
+    { content : String }
 
 
 init : Model
 init =
-    { value = "" }
-
-
-
--- Actions
+    { content = "" }
 
 
 type Msg
     = Change String
 
 
-
--- , Update ,Reducers
-
-
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Change newConent ->
-            { model | value = newConent }
-
-
-
--- View
+        Change text ->
+            { model | content = text }
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ input [ placeholder "Enter something", value model.value, onInput Change ] []
-
-        -- , div [] [ text (String.repeat 5 (String.toUpper (String.reverse model.value))) ]
-        , div [] [ text (String.repeat 5 <| String.toUpper <| String.reverse model.value) ]
+        [ input [ placeholder "enter something", value model.content, onInput Change ] []
+        , div [] [ text (String.toLower <| String.reverse <| String.repeat 5 <| String.slice 0 12 model.content) ]
+        , div [] [ text (String.fromInt <| String.length model.content) ]
         ]
+
+
+
+-- , div [] [ text (String.toUpper <| String.reverse <| String.slice 0 3 model.content) ]

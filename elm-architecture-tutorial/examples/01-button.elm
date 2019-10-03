@@ -15,33 +15,33 @@ type alias Model =
 
 init : Model
 init =
-    5
+    10
 
 
 type Msg
-    = Increase
-    | Decrease
+    = Increment
+    | Decrement
     | Reset
 
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Increase ->
+        Increment ->
             model + 1
 
-        Decrease ->
+        Decrement ->
             model - 1
 
         Reset ->
-            5
+            10
 
 
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick Decrease ] [ text "-" ]
+        [ button [ onClick Increment ] [ text "+" ]
         , div [] [ text (String.fromInt model) ]
-        , button [ onClick Increase ] [ text "+" ]
-        , button [ onClick Reset ] [ text "Reset" ]
+        , button [ onClick Decrement ] [ text "-" ]
+        , button [ onClick Reset ] [ text "reset" ]
         ]
