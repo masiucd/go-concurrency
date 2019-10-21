@@ -6,21 +6,20 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 
 
-
--- MAIN
-
-
 main =
     Browser.sandbox { init = init, update = update, view = view }
 
 
 
--- MODEL
+-- Custom state type
 
 
 type alias Model =
-    { content : String
-    }
+    { content : String }
+
+
+
+-- State
 
 
 init : Model
@@ -29,11 +28,15 @@ init =
 
 
 
--- UPDATE
+-- Action
 
 
 type Msg
     = Change String
+
+
+
+-- Reducer
 
 
 update : Msg -> Model -> Model
@@ -43,13 +46,12 @@ update msg model =
             { model | content = newContent }
 
 
-
--- VIEW
-
-
 view : Model -> Html Msg
 view model =
     div []
-        [ input [ placeholder "Text to reverse", value model.content, onInput Change ] []
-        , div [] [ text (String.reverse <| String.toUpper model.content) ]
+        [ input [ placeholder "Enter some text", value model.content, onInput Change ] []
+        , div [] [ text (String.reverse <| String.slice 0 12 <| String.toUpper model.content) ]
+
+        -- , div [] [ text (String.toUpper model.content |> String.reverse |> String.slice 0 18) ]
+        , div [] [ text (String.length model.content |> String.fromInt) ]
         ]
