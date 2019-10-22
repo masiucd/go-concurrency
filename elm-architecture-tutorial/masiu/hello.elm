@@ -15,6 +15,19 @@ checkPower level =
         "Meehh"
 
 
+isEven : Int -> Bool
+isEven n =
+    (n |> modBy 2) == 0
+
+
+res =
+    isEven 10
+
+
+main =
+    Html.text (Bool.fromInt res)
+
+
 
 -- result =
 --     add 10 12
@@ -22,7 +35,7 @@ checkPower level =
 
 result =
     -- add 10 12 |> add 10
-    add 2 2 |> (\a -> a remainderBy 2 == 0)
+    add 2 2 |> (\a -> a modBy 2 == 0)
 
 
 main =
