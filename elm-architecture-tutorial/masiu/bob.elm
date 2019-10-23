@@ -72,7 +72,7 @@ viewValidation model =
 
 viewValidation2 : Model -> Html msg
 viewValidation2 model =
-    if (String.length model.password |> String.fromInt) < "8" then
+    if (String.length model.password |> String.fromInt) < "8" mthen
         div [ style "color" "red" ] [ text "password is to short mate" ]
 
     else
