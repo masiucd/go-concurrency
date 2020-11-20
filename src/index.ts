@@ -9,6 +9,13 @@ input UserInput {
   email: String!
 }
 
+input PostInput {
+  title:     String!
+  content:   String
+  author:   Int
+}
+
+
 type User {
   id: ID!
   name: String!
@@ -33,6 +40,7 @@ type Post {
 
   type Mutation {
     createUser(input: UserInput): User!
+    createPost(input: PostInput): Post!
 
   }
 
@@ -54,7 +62,7 @@ const resolvers = {
       ctx: { p: PrismaClient },
       info: any
     ) => {
-      return await p.post.findMany()
+      return await p.post.findMany({ include: { author: true } })
     },
   },
   Mutation: {
@@ -71,6 +79,33 @@ const resolvers = {
         },
       })
       return user
+    },
+
+    createPost: async (
+      root: any,
+      args: {
+        input: {
+          title: string
+          content: string
+          published: boolean
+          author: number
+        }
+      },
+      ctx: { p: PrismaClient },
+      info: any
+    ) => {
+      const post = await ctx.p.post.create({
+        data: {
+          title: args.input.title,
+          content: args.input.content,
+          author: {
+            connect: {
+              id: args.input.author,
+            },
+          },
+        },
+      })
+      return post
     },
   },
 }
