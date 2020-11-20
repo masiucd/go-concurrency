@@ -1,9 +1,13 @@
 import { GraphQLServer } from "graphql-yoga"
 import { PrismaClient } from "@prisma/client"
-
 const p = new PrismaClient()
 
 const typeDefs = `
+
+input UserInput {
+  name: String!
+  email: String!
+}
 
 type User {
   id: ID!
@@ -20,9 +24,16 @@ type Post {
   author:   User
 }
 
+
+
   type Query {
     users: [User]!
     posts: [Post]
+  }
+
+  type Mutation {
+    createUser(input: UserInput): User!
+
   }
 
 `
@@ -44,6 +55,22 @@ const resolvers = {
       info: any
     ) => {
       return await p.post.findMany()
+    },
+  },
+  Mutation: {
+    createUser: async (
+      root: any,
+      args: { input: { name: string; email: string } },
+      ctx: { p: PrismaClient },
+      info: any
+    ) => {
+      const user = await ctx.p.user.create({
+        data: {
+          name: args.input.name,
+          email: args.input.email,
+        },
+      })
+      return user
     },
   },
 }
