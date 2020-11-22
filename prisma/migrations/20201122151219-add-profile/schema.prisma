@@ -1,6 +1,6 @@
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -21,8 +21,8 @@ model User {
   email String  @unique
   name  String?
   password String
-  program Course? @relation(fields: [courseId], references:[id])
-  courseId Int?
+  program Course @relation(fields: [courseId], references:[id])
+  courseId Int
 }
 
 model Course {

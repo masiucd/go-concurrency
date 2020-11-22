@@ -1,35 +1,33 @@
 input UserInput {
   name: String!
   email: String!
+  password: String!
 }
 
-input PostInput {
+input CourseInput {
   title: String!
-  content: String
-  author: Int
 }
 
 type User {
   id: ID!
   name: String!
   email: String!
-  posts: [Post]
+  password: String!
+  program: Course
 }
 
-type Post {
+type Course {
   id: ID
   title: String!
-  content: String
-  published: Boolean
-  author: User
+  students: [User]
 }
 
 type Query {
   users: [User]!
-  posts: [Post]
+  courses: [Course]!
 }
 
 type Mutation {
   createUser(input: UserInput): User!
-  createPost(input: PostInput): Post!
+  createCourse(input: CourseInput): Course!
 }
