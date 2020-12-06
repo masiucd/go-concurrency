@@ -1,37 +1,36 @@
-import { PrismaClient } from "@prisma/client"
+import { Ctx, Input, RegisterUserInput } from "./types"
+import bcrypt from "bcryptjs"
 
 export const Mutation = {
-  createUser: async (
-    root: any,
-    args: { input: { name: string; email: string; password: string } },
-    ctx: { p: PrismaClient },
-    info: any
-  ) => {
-    const user = await ctx.p.user.create({
+  registerUser: async (_: never, args: Input<RegisterUserInput>, ctx: Ctx) => {
+    let user = await ctx.p.user.findOne({ where: { email: args.input.email } })
+    if (user) {
+      throw new Error("User already exists")
+    }
+
+    user = await ctx.p.user.create({
       data: {
         name: args.input.name,
         email: args.input.email,
-        password: args.input.password,
+        password: await bcrypt.hash(args.input.password, 8),
       },
     })
-    return user
-  },
 
-  createCourse: async (
-    root: any,
-    args: {
-      input: {
-        title: string
-      }
-    },
-    ctx: { p: PrismaClient },
-    info: any
-  ) => {
-    const course = await ctx.p.course.create({
-      data: {
-        title: args.input.title,
-      },
-    })
-    return course
+    // 1. create function that create token
+    // 1. create function create cookies
+    const token = tokenResponse(user)
+
+    return {
+      token,
+      user,
+    }
+    // const user = await ctx.p.user.create({
+    //   data: {
+    //     name: args.input.name,
+    //     email: args.input.email,
+    //     password: args.input.password,
+    //   },
+    // })
+    // return user
   },
 }

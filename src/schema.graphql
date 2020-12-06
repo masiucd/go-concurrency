@@ -4,10 +4,6 @@ input UserInput {
   password: String!
 }
 
-input CourseInput {
-  title: String!
-}
-
 type User {
   id: ID!
   name: String!
@@ -16,18 +12,16 @@ type User {
   program: Course
 }
 
-type Course {
-  id: ID
-  title: String!
-  students: [User]
+type AuthResponse {
+  token: String
+  user: User
 }
 
 type Query {
   users: [User]!
-  courses: [Course]!
 }
 
 type Mutation {
-  createUser(input: UserInput): User!
+  registerUser(input: UserInput): AuthResponse
   createCourse(input: CourseInput): Course!
 }

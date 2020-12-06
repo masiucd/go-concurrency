@@ -1,15 +1,7 @@
-import { PrismaClient } from "@prisma/client"
+import { Ctx } from "./types"
 
 export const Query = {
-  users: async (root: any, args: any, ctx: { p: PrismaClient }, info: any) => {
+  users: async (root: never, args: never, ctx: Ctx) => {
     return await ctx.p.user.findMany()
-  },
-  courses: async (
-    root: any,
-    args: any,
-    ctx: { p: PrismaClient },
-    info: any
-  ) => {
-    return await ctx.p.course.findMany({ include: { students: true } })
   },
 }
