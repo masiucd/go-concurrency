@@ -9,3 +9,32 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model User {
+  id String @id @default(cuid())
+  firstName String
+  lastName String
+  email String @unique
+  password String 
+  role Int @default(0)
+  comments Comment[]
+}
+
+model Movie {
+  id String @id @default(cuid())
+  title String
+  releaseYear Int 
+  price Int
+  rating Int @default(0)
+  image String
+  comments Comment[]
+}
+
+model Comment {
+  id String @id @default(cuid())
+  text String 
+  movieId String
+  ownerId String
+  product  Movie @relation(fields: [movieId], references: [id])
+  owner User @relation(fields: ownerId, references:[id])
+}
