@@ -35,6 +35,6 @@ model Comment {
   text String 
   movieId String
   ownerId String
-  product  Movie @relation(fields: [movieId], references: [id])
+  movie  Movie @relation(fields: [movieId], references: [id])
   owner User @relation(fields: ownerId, references:[id])
 }

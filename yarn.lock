@@ -535,6 +535,11 @@
   resolved "https://artifactory.etraveli.net/artifactory/api/npm/remote-npm/@types/component-emitter/-/component-emitter-1.2.10.tgz#ef5b1589b9f16544642e473db5ea5639107ef3ea"
   integrity sha1-71sVibnxZURkLkc9tepWORB+8+o=
 
+"@types/cookie@^0.4.1":
+  version "0.4.1"
+  resolved "https://artifactory.etraveli.net/artifactory/api/npm/remote-npm/@types/cookie/-/cookie-0.4.1.tgz#bfd02c1f2224567676c1545199f87c3a861d878d"
+  integrity sha1-v9AsHyIkVnZ2wVRRmfh8OoYdh40=
+
 "@types/engine.io@*":
   version "3.1.7"
   resolved "https://artifactory.etraveli.net/artifactory/api/npm/remote-npm/@types/engine.io/-/engine.io-3.1.7.tgz#86e541a5dc52fb7e97735383564a6ae4cfe2e8f5"
@@ -1354,6 +1359,11 @@ cookie@0.4.0:
   version "0.4.0"
   resolved "https://artifactory.etraveli.net/artifactory/api/npm/remote-npm/cookie/-/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
   integrity sha1-vrQ35wIrO21JAZ0IhmUwPr6cFLo=
+
+cookie@^0.4.1:
+  version "0.4.1"
+  resolved "https://artifactory.etraveli.net/artifactory/api/npm/remote-npm/cookie/-/cookie-0.4.1.tgz#afd713fe26ebd21ba95ceb61f9a8116e50a537d1"
+  integrity sha1-r9cT/ibr0hupXOth+agRblClN9E=
 
 core-js-pure@^3.10.2:
   version "3.17.3"
