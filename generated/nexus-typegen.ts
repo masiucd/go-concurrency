@@ -29,12 +29,32 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Comment: { // root type
-    id?: string | null; // ID
+    id: number; // Int!
+    movie?: NexusGenRootTypes['Movie'] | null; // Movie
     movieId?: string | null; // String
+    owner?: NexusGenRootTypes['User'] | null; // User
     ownerId?: string | null; // String
-    text?: string | null; // String
+    text: string; // String!
+  }
+  Movie: { // root type
+    comments?: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
+    id: number; // Int!
+    image: string; // String!
+    price: number; // Int!
+    rating: number; // Int!
+    releaseYear: number; // Int!
+    title: string; // String!
   }
   Query: {};
+  User: { // root type
+    comments?: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
+    email: string; // String!
+    firstName: string; // String!
+    id: number; // Int!
+    lastName: string; // String!
+    password: string; // String!
+    role?: number | null; // Int
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -49,25 +69,65 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
   Comment: { // field return type
-    id: string | null; // ID
+    id: number; // Int!
+    movie: NexusGenRootTypes['Movie'] | null; // Movie
     movieId: string | null; // String
+    owner: NexusGenRootTypes['User'] | null; // User
     ownerId: string | null; // String
-    text: string | null; // String
+    text: string; // String!
+  }
+  Movie: { // field return type
+    comments: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
+    id: number; // Int!
+    image: string; // String!
+    price: number; // Int!
+    rating: number; // Int!
+    releaseYear: number; // Int!
+    title: string; // String!
   }
   Query: { // field return type
     ok: boolean; // Boolean!
+  }
+  User: { // field return type
+    comments: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
+    email: string; // String!
+    firstName: string; // String!
+    id: number; // Int!
+    lastName: string; // String!
+    password: string; // String!
+    role: number | null; // Int
   }
 }
 
 export interface NexusGenFieldTypeNames {
   Comment: { // field return type name
-    id: 'ID'
+    id: 'Int'
+    movie: 'Movie'
     movieId: 'String'
+    owner: 'User'
     ownerId: 'String'
     text: 'String'
   }
+  Movie: { // field return type name
+    comments: 'Comment'
+    id: 'Int'
+    image: 'String'
+    price: 'Int'
+    rating: 'Int'
+    releaseYear: 'Int'
+    title: 'String'
+  }
   Query: { // field return type name
     ok: 'Boolean'
+  }
+  User: { // field return type name
+    comments: 'Comment'
+    email: 'String'
+    firstName: 'String'
+    id: 'Int'
+    lastName: 'String'
+    password: 'String'
+    role: 'Int'
   }
 }
 

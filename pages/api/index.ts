@@ -13,43 +13,38 @@ export const GQLDate = asNexusMethod(DateTimeResolver, "date")
 const User = objectType({
   name: "User",
   definition(t) {
-    t.id("id")
+    t.nonNull.int("id")
+    t.nonNull.string("firstName")
+    t.nonNull.string("lastName")
+    t.nonNull.string("email")
+    t.nonNull.string("password")
+    t.int("role")
+    t.list.nullable.field("comments", {type: "Comment"})
   },
 })
 
 const Movie = objectType({
   name: "Movie",
   definition(t) {
-    t.id("id")
-    t.string("title", {description: "movie title"})
-    t.int("releaseYear", {description: "year released"})
-    t.int("price", {description: "amount to see the movie"})
-    t.int("rating", {description: "rating from 0 to 5"})
-    t.string("image", {description: "URL string"})
-    t.field("comments", {
-      // type: list(User),
-      type: Comment,
-      resolve(parent, _, ctx: Context) {
-        return ctx.prisma.comment.findMany({
-          where: {
-            movieId: parent.id,
-          },
-        })
-      },
-    })
+    t.nonNull.int("id", {description: "uses int instead of uuid"})
+    t.nonNull.string("title", {description: "movie title"})
+    t.nonNull.int("releaseYear", {description: "year released"})
+    t.nonNull.int("price", {description: "amount to see the movie"})
+    t.nonNull.int("rating", {description: "rating from 0 to 5"})
+    t.nonNull.string("image", {description: "URL string"})
+    t.list.nullable.field("comments", {type: "Comment"})
   },
 })
 
 const Comment = objectType({
   name: "Comment",
   definition(t) {
-    t.id("id")
-    t.string("text")
+    t.nonNull.int("id")
+    t.nonNull.string("text")
     t.string("movieId")
     t.string("ownerId")
-    // t.field("movie", {
-    //   type: "Movie",
-    // })
+    t.field("owner", {type: "User"})
+    t.field("movie", {type: "Movie"})
   },
 })
 

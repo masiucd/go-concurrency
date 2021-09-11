@@ -3,12 +3,46 @@
 
 
 type Comment {
-  id: ID
+  id: Int!
+  movie: Movie
   movieId: String
+  owner: User
   ownerId: String
-  text: String
+  text: String!
+}
+
+type Movie {
+  comments: [Comment]
+
+  """uses int instead of uuid"""
+  id: Int!
+
+  """URL string"""
+  image: String!
+
+  """amount to see the movie"""
+  price: Int!
+
+  """rating from 0 to 5"""
+  rating: Int!
+
+  """year released"""
+  releaseYear: Int!
+
+  """movie title"""
+  title: String!
 }
 
 type Query {
   ok: Boolean!
+}
+
+type User {
+  comments: [Comment]
+  email: String!
+  firstName: String!
+  id: Int!
+  lastName: String!
+  password: String!
+  role: Int
 }

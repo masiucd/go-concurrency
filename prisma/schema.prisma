@@ -11,30 +11,30 @@ generator client {
 }
 
 model User {
-  id String @id @default(cuid())
+  id        Int       @id @default(autoincrement())
   firstName String
-  lastName String
-  email String @unique
-  password String 
-  role Int @default(0)
-  comments Comment[]
+  lastName  String
+  email     String    @unique
+  password  String
+  role      Int       @default(0)
+  comments  Comment[]
 }
 
 model Movie {
-  id String @id @default(cuid())
-  title String
-  releaseYear Int 
-  price Int
-  rating Int @default(0)
-  image String
-  comments Comment[]
+  id          Int       @id @default(autoincrement())
+  title       String
+  releaseYear Int
+  price       Int
+  rating      Int       @default(0)
+  image       String
+  comments    Comment[]
 }
 
 model Comment {
-  id String @id @default(cuid())
-  text String 
-  movieId String
-  ownerId String
-  movie  Movie @relation(fields: [movieId], references: [id])
-  owner User @relation(fields: ownerId, references:[id])
+  id      Int    @id @default(autoincrement())
+  text    String
+  movieId Int
+  ownerId Int
+  movie   Movie  @relation(fields: [movieId], references: [id])
+  owner   User   @relation(fields: [ownerId], references: [id])
 }
