@@ -1,17 +1,44 @@
 import {ApolloServer} from "apollo-server-micro"
 import {DateTimeResolver} from "graphql-scalars"
 import {NextApiHandler, NextApiRequest, NextApiResponse} from "next"
-import {asNexusMethod, makeSchema, nonNull, nullable, objectType, stringArg} from "nexus"
+import {asNexusMethod, list, makeSchema, nonNull, nullable, objectType, stringArg} from "nexus"
 import path from "path"
 import cors from "micro-cors"
-import prisma from "../../lib/prisma"
+// import prisma from "../../lib/prisma"
 import {setCookie} from "../../util/cookies"
+import {Context, createContext} from "../../lib/context"
 
 export const GQLDate = asNexusMethod(DateTimeResolver, "date")
 
-// const User = objectType({
-//   name: "User",
-// })
+const User = objectType({
+  name: "User",
+  definition(t) {
+    t.id("id")
+  },
+})
+
+const Movie = objectType({
+  name: "Movie",
+  definition(t) {
+    t.id("id")
+    t.string("title", {description: "movie title"})
+    t.int("releaseYear", {description: "year released"})
+    t.int("price", {description: "amount to see the movie"})
+    t.int("rating", {description: "rating from 0 to 5"})
+    t.string("image", {description: "URL string"})
+    t.field("comments", {
+      // type: list(User),
+      type: Comment,
+      resolve(parent, _, ctx: Context) {
+        return ctx.prisma.comment.findMany({
+          where: {
+            movieId: parent.id,
+          },
+        })
+      },
+    })
+  },
+})
 
 const Comment = objectType({
   name: "Comment",
@@ -27,7 +54,7 @@ const Comment = objectType({
 })
 
 export const schema = makeSchema({
-  types: [Comment],
+  types: [Comment, User, Movie],
   outputs: {
     typegen: path.join(process.cwd(), "generated/nexus-typegen.ts"),
     schema: path.join(process.cwd(), "generated/schema.graphql"),
@@ -40,7 +67,7 @@ export const config = {
   },
 }
 
-const apolloServer = new ApolloServer({schema})
+const apolloServer = new ApolloServer({schema, context: createContext})
 let apolloServerHandler: NextApiHandler
 
 async function getApolloServerHandler() {
@@ -53,7 +80,7 @@ async function getApolloServerHandler() {
   return apolloServerHandler
 }
 
-const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<any>) => {
+const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const apolloServerHandler = await getApolloServerHandler()
   if (req.method === "OPTIONS") {
     res.end()
