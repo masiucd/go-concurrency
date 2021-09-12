@@ -9,12 +9,11 @@ import styles from "../styles/Home.module.css"
 const MOVIES_QUERY = gql`
   query movies {
     movies {
-      price
+      title
       rating
+      releaseYear
       comments {
-        movie {
-          price
-        }
+        text
       }
     }
   }

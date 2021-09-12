@@ -8,11 +8,14 @@ export const getMovies = (t: QueryT): void => {
     type: "Movie",
     async resolve(_, __, ctx: Context): Promise<any> {
       return await ctx.prisma.movie.findMany({
-        select: {
-          title: true,
-          releaseYear: true,
+        include: {
           comments: true,
         },
+        // select: {
+        //   title: true,
+        //   releaseYear: true,
+        //   comments: true,
+        // },
       })
     },
   })
