@@ -25,7 +25,7 @@ type Movie {
   """URL string"""
   image: String!
 
-  """amount to see the movie"""
+  """price of the movie"""
   price: Int!
 
   """rating from 0 to 5"""
@@ -39,6 +39,7 @@ type Movie {
 }
 
 type Query {
+  comments: [Comment]
   movie(id: Int!): Movie
   movies: [Movie]
 }

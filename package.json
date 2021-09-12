@@ -16,6 +16,7 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@prisma/client": "3.0.1",
+    "apollo-server-core": "^3.3.0",
     "apollo-server-micro": "^3.3.0",
     "cookie": "^0.4.1",
     "express": "^4.17.1",

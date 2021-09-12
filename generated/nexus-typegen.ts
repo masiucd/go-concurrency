@@ -101,6 +101,7 @@ export interface NexusGenFieldTypes {
     title: string; // String!
   }
   Query: { // field return type
+    comments: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
     movie: NexusGenRootTypes['Movie'] | null; // Movie
     movies: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
   }
@@ -134,6 +135,7 @@ export interface NexusGenFieldTypeNames {
     title: 'String'
   }
   Query: { // field return type name
+    comments: 'Comment'
     movie: 'Movie'
     movies: 'Movie'
   }
