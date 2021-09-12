@@ -39,6 +39,7 @@ type Movie {
 }
 
 type Query {
+  comment(id: Int!): Comment
   comments: [Comment]
   movie(id: Int!): Movie
   movies: [Movie]

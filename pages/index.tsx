@@ -1,11 +1,36 @@
-import type {GetStaticProps, NextPage} from "next"
+import {useQuery} from "@apollo/client"
+import gql from "graphql-tag"
+import type {NextPage} from "next"
 import Head from "next/head"
-// import Image from "next/image"
 
+// import Image from "next/image"
 import styles from "../styles/Home.module.css"
 
-interface Props {}
-const Home: NextPage<Props> = () => {
+const MOVIES_QUERY = gql`
+  query movies {
+    movies {
+      price
+      rating
+      comments {
+        movie {
+          price
+        }
+      }
+    }
+  }
+`
+
+const Home: NextPage = () => {
+  const {data, error, loading} = useQuery(MOVIES_QUERY, {fetchPolicy: "cache-and-network"})
+
+  if (loading) {
+    return <div>Loading ...</div>
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
+  console.log(data)
+
   return (
     <div className={styles.container}>
       <Head>

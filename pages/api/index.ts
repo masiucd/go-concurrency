@@ -1,14 +1,15 @@
 import {ApolloServer} from "apollo-server-micro"
 import {DateTimeResolver} from "graphql-scalars"
-import {NextApiHandler, NextApiRequest, NextApiResponse} from "next"
-import {asNexusMethod, list, makeSchema, nonNull, nullable, objectType, stringArg} from "nexus"
-import path from "path"
 import cors from "micro-cors"
-import {setCookie} from "../../util/cookies"
+import {NextApiHandler, NextApiRequest, NextApiResponse} from "next"
+import {asNexusMethod, makeSchema} from "nexus"
+import path from "path"
+
 import {createContext} from "../../lib/context"
-import {User} from "./object-types/user"
-import {Movie} from "./object-types/movie"
+import {setCookie} from "../../util/cookies"
 import {Comment} from "./object-types/comment"
+import {Movie} from "./object-types/movie"
+import {User} from "./object-types/user"
 import {Query} from "./query"
 
 export const GQLDate = asNexusMethod(DateTimeResolver, "date")
@@ -40,7 +41,7 @@ async function getApolloServerHandler() {
   return apolloServerHandler
 }
 
-const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse): Promise<any> => {
   const apolloServerHandler = await getApolloServerHandler()
   if (req.method === "OPTIONS") {
     res.end()
@@ -50,5 +51,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
   return apolloServerHandler(req, res)
 }
 
-// @ts-ignore
-export default cors()(handler)
+export default cors({
+  allowCredentials: true,
+  allowHeaders: ["X-HTTP-Method-Override", "Content-Type", "Authorization", "Accept", "movie-app"],
+})(handler as any)

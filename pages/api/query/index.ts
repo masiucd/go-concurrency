@@ -1,6 +1,6 @@
 import {extendType} from "nexus"
-import {getComments} from "./comment"
 
+import {getComment, getComments} from "./comment"
 import {getMovie, getMovies} from "./movie"
 
 export const Query = extendType({
@@ -9,5 +9,6 @@ export const Query = extendType({
     getMovies(t)
     getMovie(t)
     getComments(t)
+    getComment(t)
   },
 })
