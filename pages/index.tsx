@@ -1,14 +1,11 @@
 import type {GetStaticProps, NextPage} from "next"
 import Head from "next/head"
 // import Image from "next/image"
-import prisma from "../lib/prisma"
+
 import styles from "../styles/Home.module.css"
 
-interface Props {
-  movies: any[]
-}
-const Home: NextPage<Props> = ({movies}) => {
-  console.log(movies)
+interface Props {}
+const Home: NextPage<Props> = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -18,15 +15,6 @@ const Home: NextPage<Props> = ({movies}) => {
       </Head>
     </div>
   )
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  const movies = await prisma.movie.findMany()
-  return {
-    props: {
-      movies,
-    },
-  }
 }
 
 export default Home

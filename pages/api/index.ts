@@ -4,52 +4,17 @@ import {NextApiHandler, NextApiRequest, NextApiResponse} from "next"
 import {asNexusMethod, list, makeSchema, nonNull, nullable, objectType, stringArg} from "nexus"
 import path from "path"
 import cors from "micro-cors"
-// import prisma from "../../lib/prisma"
 import {setCookie} from "../../util/cookies"
-import {Context, createContext} from "../../lib/context"
+import {createContext} from "../../lib/context"
+import {User} from "./object-types/user"
+import {Movie} from "./object-types/movie"
+import {Comment} from "./object-types/comment"
+import {Query} from "./query"
 
 export const GQLDate = asNexusMethod(DateTimeResolver, "date")
 
-const User = objectType({
-  name: "User",
-  definition(t) {
-    t.nonNull.int("id")
-    t.nonNull.string("firstName")
-    t.nonNull.string("lastName")
-    t.nonNull.string("email")
-    t.nonNull.string("password")
-    t.int("role")
-    t.list.nullable.field("comments", {type: "Comment"})
-  },
-})
-
-const Movie = objectType({
-  name: "Movie",
-  definition(t) {
-    t.nonNull.int("id", {description: "uses int instead of uuid"})
-    t.nonNull.string("title", {description: "movie title"})
-    t.nonNull.int("releaseYear", {description: "year released"})
-    t.nonNull.int("price", {description: "amount to see the movie"})
-    t.nonNull.int("rating", {description: "rating from 0 to 5"})
-    t.nonNull.string("image", {description: "URL string"})
-    t.list.nullable.field("comments", {type: "Comment"})
-  },
-})
-
-const Comment = objectType({
-  name: "Comment",
-  definition(t) {
-    t.nonNull.int("id")
-    t.nonNull.string("text")
-    t.string("movieId")
-    t.string("ownerId")
-    t.field("owner", {type: "User"})
-    t.field("movie", {type: "Movie"})
-  },
-})
-
 export const schema = makeSchema({
-  types: [Comment, User, Movie],
+  types: [Comment, User, Movie, GQLDate, Query],
   outputs: {
     typegen: path.join(process.cwd(), "generated/nexus-typegen.ts"),
     schema: path.join(process.cwd(), "generated/schema.graphql"),
