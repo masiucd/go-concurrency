@@ -1,21 +1,27 @@
-import styled from "@emotion/styled"
+import GlobalStyles from "@components/styles/global.styles"
+import {css} from "@emotion/react"
+import {sizes} from "@styles/styles"
 import {FC, Fragment} from "react"
 
 import Footer from "./footer"
 import Header from "./header"
 
-const Main = styled.main`
-  /*  */
-`
-
-const Layout: FC = ({children}) => {
-  return (
-    <Fragment>
-      <Header />
-      <Main>{children}</Main>
-      <Footer />
-    </Fragment>
-  )
-}
+const Layout: FC = ({children}) => (
+  <Fragment>
+    <GlobalStyles />
+    <Header />
+    <main
+      css={css`
+        max-width: ${sizes.maxWidth};
+        border: 2px solid #fff;
+        margin: 1rem auto;
+        min-height: calc(100vh - 22rem);
+      `}
+    >
+      {children}
+    </main>
+    <Footer />
+  </Fragment>
+)
 
 export default Layout

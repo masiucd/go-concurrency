@@ -3,27 +3,25 @@ export const fonts = {
   oswald: "var(--oswald)",
 }
 
-// const colorsMain {
-//   --bg: #252932;
-//   --bg-2: #191c21;
-//   --text: #fff;
-//   --primary: #f56f6c;
-//   --highlight: #195962;
+export const colorsMain = {
+  bg: "var(--bg)",
+  bg2: "var(--bg2)",
+  text: "var(--text)",
+  primary: "var(--primary)",
+  highlight: "var(--highlight)",
+}
 
-// }
-
-// const bgNuisances ={
-//   --bg-900: #313642;
-//   --bg-800: #3d4452;
-//   --bg-700: #495163;
-//   --bg-600: #555e73;
-//   --bg-500: #616b83;
-//   --bg-400: #6d7993;
-//   --bg-300: #7d889f;
-//   --bg-200: #8e97ab;
-//   --bg-100: #9ea6b7;
-
-// }
+export const bgNuisances = {
+  bg900: "var(--bg-900)",
+  bg800: "var(--bg-800)",
+  bg700: "var(--bg-700)",
+  bg600: "var(--bg-600)",
+  bg500: "var(--bg-500)",
+  bg400: "var(--bg-400)",
+  bg300: "var(--bg-300)",
+  bg200: "var(--bg-200)",
+  bg100: "var(--bg-100)",
+}
 
 export const elevations = {
   sm: "var(--sm-shadow)",
@@ -34,4 +32,22 @@ export const elevations = {
   xxl: "var(--xxl-shadow)",
   inner: "var(--inner-shadow)",
   none: "var(--none-shadow)",
+}
+
+export const sizes = {
+  h1: "var(--h1)",
+  h2: "var(--h2)",
+  h3: "var(--h3)",
+  h4: "var(--h4)",
+  h5: "var(--h5)",
+  maxWidth: "var(--maxWidth)",
+  headerHeight: "var(--header-height)",
+  footerHeight: "var(--footer-height)",
+}
+export const borderRadius = {
+  borderRadiusS: "var(--border-radius-s)",
+  borderRadiusM: "var(--border-radius-m)",
+  borderRadiusL: "var(--border-radius-l)",
+  borderRadiusXL: "var(--border-radius-xl)",
+  borderRadius2XL: "var(--border-radius-2xl)",
 }
