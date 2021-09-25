@@ -10,12 +10,8 @@ export const getMovies = (t: QueryT): void => {
       return await ctx.prisma.movie.findMany({
         include: {
           comments: true,
+          categories: true,
         },
-        // select: {
-        //   title: true,
-        //   releaseYear: true,
-        //   comments: true,
-        // },
       })
     },
   })

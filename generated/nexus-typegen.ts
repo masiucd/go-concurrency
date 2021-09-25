@@ -43,6 +43,11 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Category: { // root type
+    id: number; // Int!
+    movies?: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
+    name: string; // String!
+  }
   Comment: { // root type
     id: number; // Int!
     movie?: NexusGenRootTypes['Movie'] | null; // Movie
@@ -52,6 +57,7 @@ export interface NexusGenObjects {
     text: string; // String!
   }
   Movie: { // root type
+    categories?: Array<NexusGenRootTypes['Category'] | null> | null; // [Category]
     comments?: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
     id: number; // Int!
     image: string; // String!
@@ -60,6 +66,7 @@ export interface NexusGenObjects {
     releaseYear: number; // Int!
     title: string; // String!
   }
+  Mutation: {};
   Query: {};
   User: { // root type
     comments?: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
@@ -83,6 +90,11 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Category: { // field return type
+    id: number; // Int!
+    movies: Array<NexusGenRootTypes['Movie'] | null> | null; // [Movie]
+    name: string; // String!
+  }
   Comment: { // field return type
     id: number; // Int!
     movie: NexusGenRootTypes['Movie'] | null; // Movie
@@ -92,6 +104,7 @@ export interface NexusGenFieldTypes {
     text: string; // String!
   }
   Movie: { // field return type
+    categories: Array<NexusGenRootTypes['Category'] | null> | null; // [Category]
     comments: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
     id: number; // Int!
     image: string; // String!
@@ -99,6 +112,9 @@ export interface NexusGenFieldTypes {
     rating: number; // Int!
     releaseYear: number; // Int!
     title: string; // String!
+  }
+  Mutation: { // field return type
+    signup: NexusGenRootTypes['User'] | null; // User
   }
   Query: { // field return type
     comment: NexusGenRootTypes['Comment'] | null; // Comment
@@ -118,6 +134,11 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Category: { // field return type name
+    id: 'Int'
+    movies: 'Movie'
+    name: 'String'
+  }
   Comment: { // field return type name
     id: 'Int'
     movie: 'Movie'
@@ -127,6 +148,7 @@ export interface NexusGenFieldTypeNames {
     text: 'String'
   }
   Movie: { // field return type name
+    categories: 'Category'
     comments: 'Comment'
     id: 'Int'
     image: 'String'
@@ -134,6 +156,9 @@ export interface NexusGenFieldTypeNames {
     rating: 'Int'
     releaseYear: 'Int'
     title: 'String'
+  }
+  Mutation: { // field return type name
+    signup: 'User'
   }
   Query: { // field return type name
     comment: 'Comment'
@@ -153,6 +178,13 @@ export interface NexusGenFieldTypeNames {
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    signup: { // args
+      email: string; // String!
+      name: string; // String!
+      password: string; // String!
+    }
+  }
   Query: {
     comment: { // args
       id: number; // Int!

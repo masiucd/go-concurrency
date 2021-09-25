@@ -7,6 +7,8 @@ import path from "path"
 
 import {createContext} from "../../lib/context"
 import {setCookie} from "../../util/cookies"
+import {Mutation} from "./mutation"
+import {Category} from "./object-types/category"
 import {Comment} from "./object-types/comment"
 import {Movie} from "./object-types/movie"
 import {User} from "./object-types/user"
@@ -15,7 +17,7 @@ import {Query} from "./query"
 export const GQLDate = asNexusMethod(DateTimeResolver, "date")
 
 export const schema = makeSchema({
-  types: [Comment, User, Movie, GQLDate, Query],
+  types: [Comment, User, Movie, GQLDate, Query, Category, Mutation],
   outputs: {
     typegen: path.join(process.cwd(), "generated/nexus-typegen.ts"),
     schema: path.join(process.cwd(), "generated/schema.graphql"),

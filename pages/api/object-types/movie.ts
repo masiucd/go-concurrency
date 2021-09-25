@@ -10,5 +10,6 @@ export const Movie = objectType({
     t.nonNull.int("rating", {description: "rating from 0 to 5"})
     t.nonNull.string("image", {description: "URL string"})
     t.list.nullable.field("comments", {type: "Comment"})
+    t.list.nullable.field("categories", {type: "Category"})
   },
 })

@@ -2,6 +2,15 @@
 ### Do not make changes to this file directly
 
 
+type Category {
+  """uses int instead of uuid"""
+  id: Int!
+  movies: [Movie]
+
+  """name of category"""
+  name: String!
+}
+
 type Comment {
   id: Int!
   movie: Movie
@@ -17,6 +26,7 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 scalar DateTime
 
 type Movie {
+  categories: [Category]
   comments: [Comment]
 
   """uses int instead of uuid"""
@@ -36,6 +46,10 @@ type Movie {
 
   """movie title"""
   title: String!
+}
+
+type Mutation {
+  signup(email: String!, name: String!, password: String!): User
 }
 
 type Query {
