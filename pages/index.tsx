@@ -1,14 +1,11 @@
 import {useQuery} from "@apollo/client"
-import Capture from "@components/image/capture"
+import {css} from "@emotion/react"
+import {motion} from "framer-motion"
 import gql from "graphql-tag"
 import type {NextPage} from "next"
 import Head from "next/head"
-<<<<<<< HEAD
-import {Fragment} from "react"
-=======
 import {FC, Fragment} from "react"
 
->>>>>>> d9bee2df97830fb5c2f067a679c48a8d1a60932a
 // import Image from "next/image"
 
 const MOVIES_QUERY = gql`
@@ -46,16 +43,47 @@ const Home: NextPage = () => {
       <Head>
         <title>Sick movies</title>
       </Head>
-<<<<<<< HEAD
-      <Capture />
-=======
 
       <Title>
         <h1>Welcome to sick movies</h1>
       </Title>
->>>>>>> d9bee2df97830fb5c2f067a679c48a8d1a60932a
+      <Capture />
     </Fragment>
   )
 }
 
 export default Home
+
+const TextPart = ({text}: {text: string}) => {
+  return (
+    <motion.h3
+      initial={{x: 15}}
+      whileHover={{
+        fontWeight: 400,
+        x: -4,
+        letterSpacing: 0,
+      }}
+      transition={{
+        duration: 0.2,
+      }}
+      css={css`
+        width: 70%;
+
+        font-weight: 900;
+        font-size: 8rem;
+        letter-spacing: 0.53cm;
+      `}
+    >
+      {text}
+    </motion.h3>
+  )
+}
+const Capture = () => {
+  return (
+    <div>
+      <TextPart text="Movies" />
+      <TextPart text="About" />
+      <TextPart text="Contact" />
+    </div>
+  )
+}
