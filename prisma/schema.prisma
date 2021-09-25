@@ -21,13 +21,20 @@ model User {
 }
 
 model Movie {
-  id          Int       @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
   releaseYear Int
   price       Int
-  rating      Int       @default(0)
+  rating      Int        @default(0)
   image       String
   comments    Comment[]
+  categories  Category[]
+}
+
+model Category {
+  id     Int     @id @default(autoincrement())
+  name   String
+  movies Movie[]
 }
 
 model Comment {

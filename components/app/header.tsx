@@ -1,15 +1,25 @@
 import {css} from "@emotion/react"
 import {sizes} from "@styles/styles"
+import Link from "next/link"
 
 const Header = () => {
   return (
     <header
       css={css`
         min-height: ${sizes.headerHeight};
-        border: 1px solid #fff;
+        display: flex;
+        align-items: center;
       `}
     >
-      <h1>Header</h1>
+      <h3
+        css={css`
+          margin-left: 5rem;
+        `}
+      >
+        <Link href="/">
+          <a>Sick movies</a>
+        </Link>
+      </h3>
     </header>
   )
 }

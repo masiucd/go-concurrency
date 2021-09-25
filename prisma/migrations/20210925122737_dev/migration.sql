@@ -19,6 +19,24 @@ CREATE TABLE "Movie" (
 );
 
 -- CreateTable
+CREATE TABLE "Category" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "CategoryOnMovie" (
+    "movieId" INTEGER NOT NULL,
+    "categoryId" INTEGER NOT NULL,
+    "assignedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "assignedBy" TEXT NOT NULL,
+
+    PRIMARY KEY ("movieId", "categoryId"),
+    CONSTRAINT "CategoryOnMovie_movieId_fkey" FOREIGN KEY ("movieId") REFERENCES "Movie" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "CategoryOnMovie_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
 CREATE TABLE "Comment" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "text" TEXT NOT NULL,

@@ -13,7 +13,6 @@ const Layout: FC = ({children}) => (
     <main
       css={css`
         max-width: ${sizes.maxWidth};
-        border: 2px solid #fff;
         margin: 1rem auto;
         min-height: calc(100vh - 22rem);
       `}

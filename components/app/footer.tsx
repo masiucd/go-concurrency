@@ -7,10 +7,9 @@ const Footer = () => {
     <footer
       css={css`
         min-height: ${sizes.footerHeight};
-        border: 1px solid #fff;
       `}
     >
-      <h1>Footer</h1>
+      {/* <h1>Footer</h1> */}
     </footer>
   )
 }
