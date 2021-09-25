@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2019",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -8,6 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
+    "jsxImportSource": "@emotion/react",
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -22,6 +23,6 @@
       "@data/*": ["json-data/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "decs.d.ts"],
+  "exclude": ["./**/*.test.tsx", "node_modules"]
 }
