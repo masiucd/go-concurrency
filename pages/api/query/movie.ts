@@ -1,4 +1,4 @@
-import {intArg, nonNull} from "nexus"
+import {nonNull, stringArg} from "nexus"
 
 import {Context} from "../../../lib/context"
 import {QueryT} from "./type"
@@ -21,10 +21,15 @@ export const getMovie = (t: QueryT): void => {
   t.field("movie", {
     type: "Movie",
     args: {
-      id: nonNull(intArg()),
+      slug: nonNull(stringArg()),
     },
-    async resolve(_, {id}, ctx: Context) {
-      return await ctx.prisma.movie.findFirst({where: {id}})
+    async resolve(_, args, ctx: Context): Promise<any> {
+      return await ctx.prisma.movie.findFirst({
+        where: {
+          slug: args.slug,
+        },
+        include: {comments: true, categories: true},
+      })
     },
   })
 }

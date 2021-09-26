@@ -6,7 +6,6 @@ import gql from "graphql-tag"
 import Link from "next/link"
 
 const capString = (input: string): string => input[0].toUpperCase() + input.toLowerCase().slice(1)
-const makeSlug = (input: string): string => input.toLowerCase().replace(/\s/g, "-")
 
 const MOVIES_QUERY = gql`
   query movies {
@@ -15,6 +14,7 @@ const MOVIES_QUERY = gql`
       rating
       releaseYear
       id
+      slug
       comments {
         text
       }
@@ -27,6 +27,7 @@ interface Movie {
   rating: number // Int!
   releaseYear: number // Int!
   title: string // String!
+  slug: string // String!
   comments: Comment[]
 }
 
@@ -72,7 +73,7 @@ const MoviesPage = () => {
     <Wrapper>
       <h1>MoviesPage</h1>
       <MoviesList>
-        {data?.allMovies.map(({id, title}) => (
+        {data?.allMovies.map(({id, title, slug}) => (
           <ListItem
             key={id}
             whileHover={{
@@ -85,7 +86,7 @@ const MoviesPage = () => {
               damping: 5,
             }}
           >
-            <Link href={`/movies/${makeSlug(title)}`}>
+            <Link href={`/movies/${slug}`}>
               <a>{capString(title)}</a>
             </Link>
           </ListItem>

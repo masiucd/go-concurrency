@@ -9,6 +9,7 @@ export const Movie = objectType({
     t.nonNull.int("price", {description: "price of the movie"})
     t.nonNull.int("rating", {description: "rating from 0 to 5"})
     t.nonNull.string("image", {description: "URL string"})
+    t.nonNull.string("slug", {description: "movie slug"})
     t.list.nullable.field("comments", {type: "Comment"})
     t.list.nullable.field("categories", {type: "Category"})
   },

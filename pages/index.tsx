@@ -5,8 +5,6 @@ import Head from "next/head"
 import Link from "next/link"
 import {Fragment} from "react"
 
-// import Image from "next/image"
-
 const Home: NextPage = () => {
   return (
     <Fragment>

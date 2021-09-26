@@ -64,6 +64,7 @@ export interface NexusGenObjects {
     price: number; // Int!
     rating: number; // Int!
     releaseYear: number; // Int!
+    slug: string; // String!
     title: string; // String!
   }
   Mutation: {};
@@ -111,6 +112,7 @@ export interface NexusGenFieldTypes {
     price: number; // Int!
     rating: number; // Int!
     releaseYear: number; // Int!
+    slug: string; // String!
     title: string; // String!
   }
   Mutation: { // field return type
@@ -155,6 +157,7 @@ export interface NexusGenFieldTypeNames {
     price: 'Int'
     rating: 'Int'
     releaseYear: 'Int'
+    slug: 'String'
     title: 'String'
   }
   Mutation: { // field return type name
@@ -190,7 +193,7 @@ export interface NexusGenArgTypes {
       id: number; // Int!
     }
     movie: { // args
-      id: number; // Int!
+      slug: string; // String!
     }
   }
 }

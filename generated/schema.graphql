@@ -44,6 +44,9 @@ type Movie {
   """year released"""
   releaseYear: Int!
 
+  """movie slug"""
+  slug: String!
+
   """movie title"""
   title: String!
 }
@@ -55,7 +58,7 @@ type Mutation {
 type Query {
   comment(id: Int!): Comment
   comments: [Comment]
-  movie(id: Int!): Movie
+  movie(slug: String!): Movie
   movies: [Movie]
 }
 
