@@ -24,7 +24,7 @@ export default Home
 const TextPart = ({text}: {text: string}) => {
   return (
     <motion.h3
-      initial={{x: 10}}
+      initial={{x: 5}}
       whileHover={{
         fontWeight: 400,
         x: -4,
@@ -33,14 +33,15 @@ const TextPart = ({text}: {text: string}) => {
       }}
       transition={{
         duration: 0.2,
+        damping: 3,
       }}
       css={css`
         font-weight: 900;
-        font-size: 7rem;
-        letter-spacing: 0.53cm;
+        font-size: 9rem;
+        letter-spacing: 0.33cm;
         display: flex;
         padding: 0;
-        height: 7rem;
+        height: 8rem;
         align-items: center;
         text-transform: capitalize;
       `}

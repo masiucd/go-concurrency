@@ -13,8 +13,8 @@ const GlobalStyles = () => {
           --bg: #252932;
           --bg-2: #191c21;
           --text: #fff;
-          --primary: #f56f6c;
-          --highlight: #195962;
+          --primary: #ff5470;
+          --highlight: #00ebc7;
 
           --bg-900: #313642;
           --bg-800: #3d4452;
