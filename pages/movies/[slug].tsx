@@ -1,7 +1,27 @@
 import {useQuery} from "@apollo/client"
+import Star from "@components/icons/star"
+import styled from "@emotion/styled"
 import {Movie} from "@prisma/client"
+import {colorsMain} from "@styles/styles"
+import cuid from "cuid"
 import gql from "graphql-tag"
+import Image from "next/image"
+import Link from "next/link"
 import {useRouter} from "next/router"
+import {Fragment} from "react"
+
+const formatPrice = (price: number) => {
+  const [tens, unit, ...rest] = price.toString(10).split("")
+  return `${tens}${unit}.${rest.join("")}$`
+}
+
+const generateStars = (rating: number) => {
+  const xs = []
+  for (let i = 1; i <= rating; i++) {
+    xs.push(<Star key={cuid()} />)
+  }
+  return xs
+}
 
 interface MovieDataResponse {
   movieItem: Movie
@@ -38,7 +58,33 @@ const GET_MOVIE_QUERY = gql`
   }
 `
 
-// Get movie by slug
+const ImgWrapper = styled.div`
+  border: 1px solid red;
+  height: 30em;
+`
+
+const StyledMovie = styled.section`
+  border: 2px solid red;
+  h3 {
+    font-size: 9rem;
+    text-align: center;
+  }
+  .info {
+    display: flex;
+    border: 2px solid red;
+    max-width: 40rem;
+    margin: 0 auto;
+    justify-content: space-evenly;
+    p {
+      font-size: 1.35em;
+
+      span {
+        color: ${colorsMain.highlight};
+        font-weight: bold;
+      }
+    }
+  }
+`
 
 const SingleMoviePage = () => {
   const {query} = useRouter()
@@ -55,15 +101,30 @@ const SingleMoviePage = () => {
     return <div>Error: {error.message}</div>
   }
 
-  console.log("data.", data?.movieItem)
-  const {title} = data?.movieItem ?? fallBackRecord
+  const {title, image, releaseYear, rating, price, categories} = data?.movieItem ?? fallBackRecord
 
   return (
-    <p>
-      <p>asdasd</p>
-      {title}
-      <p>asdas</p>
-    </p>
+    <Fragment>
+      <Link href="/movies">
+        <a> &#8592; Movies</a>
+      </Link>
+
+      <StyledMovie>
+        <h3>{title}</h3>
+        <div className="info">
+          <p>
+            year: <span>{releaseYear}</span>{" "}
+          </p>
+          <p>
+            rating: <span>{generateStars(rating)}</span>{" "}
+          </p>
+          <p>
+            price: <span>{formatPrice(price)}</span>{" "}
+          </p>
+        </div>
+      </StyledMovie>
+      <ImgWrapper>{/* <Image src={image} width="100%" height="100%" /> */}</ImgWrapper>
+    </Fragment>
   )
 }
 export default SingleMoviePage
