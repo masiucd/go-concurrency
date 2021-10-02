@@ -37,11 +37,11 @@ const GlobalStyles = () => {
           --none-shadow: 0 0 #0000;
 
           /* sizes */
-          --h1: 3.052rem;
-          --h2: 2.441rem;
-          --h3: 1.953rem;
-          --h4: 1.563rem;
-          --h5: 1.25rem;
+          --h1: 5.052rem;
+          --h2: 4.441rem;
+          --h3: 3.953rem;
+          --h4: 2.563rem;
+          --h5: 2.25rem;
           --maxWidth: 110rem;
           --header-height: 10rem;
           --footer-height: 10rem;

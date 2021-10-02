@@ -1,33 +1,58 @@
 import {css} from "@emotion/react"
 import styled from "@emotion/styled"
-import {sizes} from "@styles/styles"
+import {colorsMain, sizes} from "@styles/styles"
+import cuid from "cuid"
 import {motion} from "framer-motion"
 import Link from "next/link"
 
-const NavItem = styled(motion.li)``
+const NavItem = styled(motion.li)`
+  padding: 0.5rem;
+`
 
-const Header = () => {
-  return (
-    <header
+const transform = (input: string) =>
+  input.split("").map((s) => {
+    if (s.match(/\s/g)) {
+      return " "
+    }
+    return (
+      <motion.span
+        key={cuid()}
+        css={css`
+          display: inline-block;
+        `}
+        whileHover={{
+          scale: 1.1,
+          zIndex: 2,
+          x: 3,
+          y: 1,
+          color: colorsMain.highlight,
+        }}
+      >
+        {s}
+      </motion.span>
+    )
+  })
+
+const Header = () => (
+  <header
+    css={css`
+      min-height: ${sizes.headerHeight};
+      display: flex;
+      align-items: center;
+    `}
+  >
+    <h3
       css={css`
-        min-height: ${sizes.headerHeight};
-        display: flex;
-        align-items: center;
+        margin-left: 5rem;
       `}
     >
-      <h3
-        css={css`
-          margin-left: 5rem;
-        `}
-      >
-        <Link href="/">
-          <a>Sick movies</a>
-        </Link>
-      </h3>
-      <Navbar />
-    </header>
-  )
-}
+      <Link href="/">
+        <a>{transform("Sick movies")}</a>
+      </Link>
+    </h3>
+    <Navbar />
+  </header>
+)
 
 const Navbar = () => {
   return (

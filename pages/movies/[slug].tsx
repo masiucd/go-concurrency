@@ -59,8 +59,10 @@ const GET_MOVIE_QUERY = gql`
 `
 
 const ImgWrapper = styled.div`
-  border: 1px solid red;
+  border: 1px solid blue;
   height: 30em;
+  display: flex;
+  justify-content: center;
 `
 
 const StyledMovie = styled.section`
@@ -102,7 +104,7 @@ const SingleMoviePage = () => {
   }
 
   const {title, image, releaseYear, rating, price, categories} = data?.movieItem ?? fallBackRecord
-
+  console.log("image", image)
   return (
     <Fragment>
       <Link href="/movies">
@@ -123,7 +125,15 @@ const SingleMoviePage = () => {
           </p>
         </div>
       </StyledMovie>
-      <ImgWrapper>{/* <Image src={image} width="100%" height="100%" /> */}</ImgWrapper>
+      <ImgWrapper>
+        <Image
+          src={`/images/${image}.jpg`}
+          width={500}
+          height={400}
+          alt={`${title} poster`}
+          quality={100}
+        />
+      </ImgWrapper>
     </Fragment>
   )
 }
