@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "cinema-order",
   "version": "0.1.0",
   "private": true,
@@ -64,22 +63,8 @@
     "prisma": "^3.1.1",
     "ts-node": "^10.2.1",
     "typescript": "4.4.2"
-=======
-  "name": "script",
-  "license": "MIT",
-  "devDependencies": {
-    "@prisma/cli": "2.10.2",
-    "ts-node": "9.0.0",
-    "typescript": "4.0.5"
   },
-  "scripts": {
-    "dev": "ts-node ./script.ts"
-  },
-  "dependencies": {
-    "@prisma/client": "2.10.2"
-  },
-  "engines": {
-    "node": ">=10.0.0"
->>>>>>> setup
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   }
 }
