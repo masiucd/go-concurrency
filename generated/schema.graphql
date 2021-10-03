@@ -59,7 +59,7 @@ type Query {
   comment(id: Int!): Comment
   comments: [Comment]
   movie(slug: String!): Movie
-  movies: [Movie]
+  movies(skip: Int, take: Int): [Movie]
 }
 
 type User {

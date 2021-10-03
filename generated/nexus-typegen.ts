@@ -195,6 +195,10 @@ export interface NexusGenArgTypes {
     movie: { // args
       slug: string; // String!
     }
+    movies: { // args
+      skip?: number | null; // Int
+      take?: number | null; // Int
+    }
   }
 }
 
