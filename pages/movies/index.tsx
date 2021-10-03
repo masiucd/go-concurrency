@@ -13,8 +13,8 @@ import React, {Fragment} from "react"
 const capString = (input: string): string => input[0].toUpperCase() + input.toLowerCase().slice(1)
 
 const MOVIES_QUERY = gql`
-  query movies {
-    allMovies: movies {
+  query movies($moviesSkip: Int, $moviesTake: Int) {
+    movies(skip: $moviesSkip, take: $moviesTake) {
       title
       rating
       releaseYear
@@ -37,7 +37,7 @@ interface Movie {
 }
 
 interface MovieData {
-  allMovies: Array<Movie>
+  movies: Array<Movie>
 }
 
 const Wrapper = styled.div`
@@ -82,8 +82,12 @@ const ListItem = styled(motion.li)`
 `
 
 const MoviesPage = () => {
-  const {data, error, loading} = useQuery<MovieData>(MOVIES_QUERY, {
+  const {data, error, loading, fetchMore} = useQuery<MovieData>(MOVIES_QUERY, {
     fetchPolicy: "cache-and-network",
+    variables: {
+      moviesSkip: 0,
+      moviesTake: 2,
+    },
   })
 
   if (loading) {
@@ -117,7 +121,7 @@ const MoviesPage = () => {
           />
 
           <MoviesList>
-            {data?.allMovies.map(({id, title, slug}) => (
+            {data?.movies.map(({id, title, slug}) => (
               <ListItem
                 key={id}
                 whileHover={{
@@ -135,6 +139,9 @@ const MoviesPage = () => {
                 </Link>
               </ListItem>
             ))}
+            <ListItem>
+              <button>More</button>
+            </ListItem>
           </MoviesList>
         </Section>
       </Wrapper>
