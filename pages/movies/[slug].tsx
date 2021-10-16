@@ -117,10 +117,7 @@ const SingleMoviePage = (): JSX.Element => {
   }
 
   const {title, image, releaseYear, rating, price, categories} = data?.movieItem ?? fallBackRecord
-  console.log(
-    "categories",
-    categories.map((x) => x.name)
-  )
+
   return (
     <Fragment>
       <Link href="/movies">
@@ -129,22 +126,7 @@ const SingleMoviePage = (): JSX.Element => {
 
       <StyledMovie>
         <h3>{title}</h3>
-        {/* <div className="info">
-          <p>
-            year: <span>{releaseYear}</span>{" "}
-          </p>
-          <p>
-            rating: <span>{generateStars(rating)}</span>{" "}
-          </p>
-          <p>
-            price: <span>{formatPrice(price)}</span>{" "}
-          </p>
-          <ul className="categories">
-            {categories.map((item) => (
-              <li key={item.name}>{item.name}</li>
-            ))}
-          </ul>
-        </div> */}
+
         <InfoSection
           releaseYear={releaseYear}
           rating={rating}
