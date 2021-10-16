@@ -1,5 +1,7 @@
 import {useQuery} from "@apollo/client"
+import {ButtonPrimary} from "@components/common/button"
 import Star from "@components/icons/star"
+import {css} from "@emotion/react"
 import styled from "@emotion/styled"
 import {Movie} from "@prisma/client"
 import {colorsMain} from "@styles/styles"
@@ -14,11 +16,18 @@ const formatPrice = (price: number) => {
   const [tens, unit, ...rest] = price.toString(10).split("")
   return `${tens}${unit}.${rest.join("")}$`
 }
+const MAX_STARS = 5
 
-const generateStars = (rating: number) => {
+const generateStars = (stars: number) => {
   const xs = []
-  for (let i = 1; i <= rating; i++) {
-    xs.push(<Star key={cuid()} />)
+  const restOfStars = MAX_STARS % stars
+  for (let i = 1; i <= stars; i++) {
+    xs.push(<Star filled key={cuid()} />)
+  }
+  if (restOfStars > 0) {
+    for (let i = 1; i <= restOfStars; i++) {
+      xs.push(<Star key={cuid()} />)
+    }
   }
   return xs
 }
@@ -79,7 +88,6 @@ const StyledMovie = styled.section`
     justify-content: space-evenly;
     p {
       font-size: 1.35em;
-
       span {
         color: ${colorsMain.highlight};
         font-weight: bold;
@@ -124,16 +132,45 @@ const SingleMoviePage = (): JSX.Element => {
             price: <span>{formatPrice(price)}</span>{" "}
           </p>
         </div>
+        <ImgWrapper>
+          <Image
+            src={`/images/${image}.jpg`}
+            width={500}
+            height={400}
+            alt={`${title} poster`}
+            quality={100}
+          />
+        </ImgWrapper>
+        <div
+          className="actions"
+          css={css`
+            border: 2px solid red;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 1rem 0.5rem;
+            display: flex;
+            justify-content: space-between;
+          `}
+        >
+          <ButtonPrimary
+            whileHover={{
+              width: "7em",
+            }}
+          >
+            Add to cart
+          </ButtonPrimary>
+          <ButtonPrimary
+            css={css`
+              width: 8rem;
+            `}
+            whileHover={{
+              width: "9em",
+            }}
+          >
+            Leave a review
+          </ButtonPrimary>
+        </div>
       </StyledMovie>
-      <ImgWrapper>
-        <Image
-          src={`/images/${image}.jpg`}
-          width={500}
-          height={400}
-          alt={`${title} poster`}
-          quality={100}
-        />
-      </ImgWrapper>
     </Fragment>
   )
 }

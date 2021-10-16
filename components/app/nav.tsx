@@ -1,5 +1,6 @@
 import {css} from "@emotion/css"
 import styled from "@emotion/styled"
+import {above} from "@styles/media-query"
 import {motion} from "framer-motion"
 import Link from "next/link"
 
@@ -12,6 +13,9 @@ const NavList = styled.ul`
   display: flex;
   margin-left: auto;
   justify-content: space-evenly;
+  @media ${above.tabletL} {
+    margin-right: 1.45rem;
+  }
   li {
     font-size: 1.2rem;
   }

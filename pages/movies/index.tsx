@@ -4,7 +4,7 @@ import Capture from "@components/common/capture"
 import {css} from "@emotion/react"
 import styled from "@emotion/styled"
 import {above, below} from "@styles/media-query"
-import {colorsMain} from "@styles/styles"
+import {bgNuisances, colorsMain} from "@styles/styles"
 import {motion} from "framer-motion"
 import gql from "graphql-tag"
 import Head from "next/head"
@@ -75,8 +75,12 @@ const Section = styled.section`
 const MoviesList = styled.ul`
   padding: 2rem 0;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column;
   justify-content: center;
+  border-radius: 4px;
+  background-color: ${bgNuisances.bg900};
+  max-height: 42rem;
+  overflow: auto;
   @media ${above.tabletXL} {
     padding-left: 2rem;
   }
@@ -85,18 +89,15 @@ const MoviesList = styled.ul`
 const ListItem = styled(motion.li)`
   font-weight: bold;
   margin-left: 1rem;
-  max-width: auto;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   margin: 0;
   padding: 0;
-  font-size: 4.5rem;
+  font-size: 4.1rem;
 
   @media ${above.tabletXL} {
-    max-width: 600px;
+    /* max-width: 600px;
     font-size: 6rem;
-    max-height: 9rem;
+    max-height: 9rem; */
   }
 `
 interface Pagination {
@@ -143,7 +144,7 @@ const MoviesPage = (): JSX.Element => {
                   key={id}
                   whileHover={{
                     opacity: 0.65,
-                    letterSpacing: "0.05cm",
+                    letterSpacing: "0.02cm",
                     color: colorsMain.highlight,
                   }}
                   transition={{
@@ -168,17 +169,18 @@ const MoviesPage = (): JSX.Element => {
                   fetchMore({
                     query: MOVIES_QUERY,
                     variables: {
-                      moviesSkip: pagination.moviesSkip + 3,
-                      moviesTake: 3,
+                      moviesTake: pagination.moviesTake + 3,
                     },
                     updateQuery: (prev, {fetchMoreResult, variables}) => {
                       setPagination((prev) => ({
                         ...prev,
-                        moviesSkip: variables?.moviesSkip + 3,
+                        moviesTake: variables?.moviesTake + 3,
                       }))
                       if (!fetchMoreResult?.movies.length) {
-                        setPagination((prev) => ({...prev, isDisabled: true}))
                         return prev
+                      }
+                      if (data?.movies.length === fetchMoreResult?.movies.length) {
+                        setPagination((prev) => ({...prev, isDisabled: true}))
                       }
 
                       return Object.assign({}, prev, {
@@ -202,9 +204,7 @@ interface CheckForMoreMoviesButtonProps {
 }
 
 function CheckForMoreMoviesButton({isDisabled, fetchMore}: CheckForMoreMoviesButtonProps) {
-  return isDisabled ? (
-    <ButtonPrimary>fsdfsdf</ButtonPrimary>
-  ) : (
+  return (
     <ButtonPrimary
       whileHover={{
         opacity: 0.75,
@@ -212,7 +212,7 @@ function CheckForMoreMoviesButton({isDisabled, fetchMore}: CheckForMoreMoviesBut
       disabled={isDisabled}
       onClick={fetchMore}
     >
-      Check for more movies
+      {isDisabled ? "No more movies" : "Check for more movies"}
     </ButtonPrimary>
   )
 }

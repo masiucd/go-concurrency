@@ -21,5 +21,6 @@ export const ButtonPrimary = styled(motion.button)`
   font-size: ${sizes.button};
   padding: 0.35rem;
   background-color: ${colorsMain.highlight};
-  font-weight: 600;
+  height: 2.5rem;
+  width: 6rem;
 `
