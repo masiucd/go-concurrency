@@ -71,19 +71,24 @@ const Section = styled.section`
     grid-template-columns: 1fr 1fr;
   }
 `
+const Movies = styled.div`
+  background-color: ${bgNuisances.bg900};
+  position: relative;
+  @media ${below.tabletXL} {
+    min-height: 40rem;
+  }
+`
 
 const MoviesList = styled.ul`
-  padding: 2rem 0;
   display: flex;
   flex-flow: column;
   justify-content: center;
   border-radius: 4px;
-  background-color: ${bgNuisances.bg900};
-  max-height: 42rem;
+
   overflow: auto;
-  @media ${above.tabletXL} {
-    padding-left: 2rem;
-  }
+  padding-left: 2rem;
+  padding: 2rem;
+  max-height: 35rem;
 `
 
 const ListItem = styled(motion.li)`
@@ -93,12 +98,6 @@ const ListItem = styled(motion.li)`
   margin: 0;
   padding: 0;
   font-size: 4.1rem;
-
-  @media ${above.tabletXL} {
-    /* max-width: 600px;
-    font-size: 6rem;
-    max-height: 9rem; */
-  }
 `
 interface Pagination {
   moviesSkip: number
@@ -137,61 +136,57 @@ const MoviesPage = (): JSX.Element => {
         <Section>
           <Capture incomingStyles={captureStyles} />
 
-          <MoviesList>
-            {data?.movies.map(({id, title, slug}) => {
-              return (
-                <ListItem
-                  key={id}
-                  whileHover={{
-                    opacity: 0.65,
-                    letterSpacing: "0.02cm",
-                    color: colorsMain.highlight,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                    damping: 5,
-                  }}
-                >
-                  <Link href={`/movies/${slug}`}>
-                    <a>{capString(title)}</a>
-                  </Link>
-                </ListItem>
-              )
-            })}
-            <ListItem
-              css={css`
-                margin-top: auto;
-              `}
-            >
-              <CheckForMoreMoviesButton
-                isDisabled={pagination.isDisabled}
-                fetchMore={() => {
-                  fetchMore({
-                    query: MOVIES_QUERY,
-                    variables: {
-                      moviesTake: pagination.moviesTake + 3,
-                    },
-                    updateQuery: (prev, {fetchMoreResult, variables}) => {
-                      setPagination((prev) => ({
-                        ...prev,
-                        moviesTake: variables?.moviesTake + 3,
-                      }))
-                      if (!fetchMoreResult?.movies.length) {
-                        return prev
-                      }
-                      if (data?.movies.length === fetchMoreResult?.movies.length) {
-                        setPagination((prev) => ({...prev, isDisabled: true}))
-                      }
+          <Movies>
+            <MoviesList>
+              {data?.movies.map(({id, title, slug}) => {
+                return (
+                  <ListItem
+                    key={id}
+                    whileHover={{
+                      opacity: 0.65,
+                      letterSpacing: "0.02cm",
+                      color: colorsMain.highlight,
+                    }}
+                    transition={{
+                      duration: 0.2,
+                      damping: 5,
+                    }}
+                  >
+                    <Link href={`/movies/${slug}`}>
+                      <a>{capString(title)}</a>
+                    </Link>
+                  </ListItem>
+                )
+              })}
+            </MoviesList>
+            <CheckForMoreMoviesButton
+              isDisabled={pagination.isDisabled}
+              fetchMore={() => {
+                fetchMore({
+                  query: MOVIES_QUERY,
+                  variables: {
+                    moviesTake: pagination.moviesTake + 3,
+                  },
+                  updateQuery: (prev, {fetchMoreResult, variables}) => {
+                    setPagination((prev) => ({
+                      ...prev,
+                      moviesTake: variables?.moviesTake + 3,
+                    }))
+                    if (!fetchMoreResult?.movies.length) {
+                      return prev
+                    }
+                    if (data?.movies.length === fetchMoreResult?.movies.length) {
+                      setPagination((prev) => ({...prev, isDisabled: true}))
+                    }
 
-                      return Object.assign({}, prev, {
-                        movies: [...fetchMoreResult.movies],
-                      })
-                    },
-                  })
-                }}
-              />
-            </ListItem>
-          </MoviesList>
+                    return Object.assign({}, prev, {
+                      movies: [...fetchMoreResult.movies],
+                    })
+                  },
+                })
+              }}
+            />
+          </Movies>
         </Section>
       </Wrapper>
     </Fragment>
@@ -205,15 +200,30 @@ interface CheckForMoreMoviesButtonProps {
 
 function CheckForMoreMoviesButton({isDisabled, fetchMore}: CheckForMoreMoviesButtonProps) {
   return (
-    <ButtonPrimary
-      whileHover={{
-        opacity: 0.75,
-      }}
-      disabled={isDisabled}
-      onClick={fetchMore}
+    <div
+      css={css`
+        position: absolute;
+        /* padding-top: 0.9rem; */
+        /* z-index: 20; */
+
+        bottom: 0;
+        @media ${above.tabletXL} {
+        }
+      `}
     >
-      {isDisabled ? "No more movies" : "Check for more movies"}
-    </ButtonPrimary>
+      <ButtonPrimary
+        css={css`
+          width: 12rem;
+        `}
+        whileHover={{
+          opacity: 0.75,
+        }}
+        disabled={isDisabled}
+        onClick={fetchMore}
+      >
+        {isDisabled ? "No more movies" : "Check for more movies"}
+      </ButtonPrimary>
+    </div>
   )
 }
 

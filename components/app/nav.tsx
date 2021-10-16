@@ -30,12 +30,12 @@ const Navbar = (): JSX.Element => (
     `}
   >
     <NavList>
-      <NavItem whileHover={{opacity: 0.7, letterSpacing: ".065cm"}}>
+      <NavItem whileHover={{opacity: 0.7, letterSpacing: ".025cm"}}>
         <Link href="/login">
           <a>login</a>
         </Link>
       </NavItem>
-      <NavItem whileHover={{opacity: 0.7, letterSpacing: ".065cm"}}>
+      <NavItem whileHover={{opacity: 0.7, letterSpacing: ".025cm"}}>
         <Link href="/signup">
           <a>sign up</a>
         </Link>

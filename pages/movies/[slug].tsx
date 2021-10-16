@@ -2,15 +2,15 @@ import {useQuery} from "@apollo/client"
 import {ButtonPrimary} from "@components/common/button"
 import Star from "@components/icons/star"
 import {css} from "@emotion/react"
+import {JSX} from "@emotion/react/jsx-runtime"
 import styled from "@emotion/styled"
-import {Movie} from "@prisma/client"
 import {colorsMain} from "@styles/styles"
 import cuid from "cuid"
 import gql from "graphql-tag"
 import Image from "next/image"
 import Link from "next/link"
 import {useRouter} from "next/router"
-import {Fragment} from "react"
+import {FC, Fragment} from "react"
 
 const formatPrice = (price: number) => {
   const [tens, unit, ...rest] = price.toString(10).split("")
@@ -32,8 +32,27 @@ const generateStars = (stars: number) => {
   return xs
 }
 
+interface Category {
+  name: string
+}
+
 interface MovieDataResponse {
-  movieItem: Movie
+  movieItem: {
+    id: number
+    title: string
+    releaseYear: number
+    price: number
+    rating: number
+    image: string
+    slug: string
+    comments: {
+      id: number
+      text: string
+      movieId: number
+      ownerId: number
+    }[]
+    categories: Array<Category>
+  }
 }
 
 const fallBackRecord = {
@@ -80,20 +99,6 @@ const StyledMovie = styled.section`
     font-size: 9rem;
     text-align: center;
   }
-  .info {
-    display: flex;
-    border: 2px solid red;
-    max-width: 40rem;
-    margin: 0 auto;
-    justify-content: space-evenly;
-    p {
-      font-size: 1.35em;
-      span {
-        color: ${colorsMain.highlight};
-        font-weight: bold;
-      }
-    }
-  }
 `
 
 const SingleMoviePage = (): JSX.Element => {
@@ -112,7 +117,10 @@ const SingleMoviePage = (): JSX.Element => {
   }
 
   const {title, image, releaseYear, rating, price, categories} = data?.movieItem ?? fallBackRecord
-
+  console.log(
+    "categories",
+    categories.map((x) => x.name)
+  )
   return (
     <Fragment>
       <Link href="/movies">
@@ -121,7 +129,7 @@ const SingleMoviePage = (): JSX.Element => {
 
       <StyledMovie>
         <h3>{title}</h3>
-        <div className="info">
+        {/* <div className="info">
           <p>
             year: <span>{releaseYear}</span>{" "}
           </p>
@@ -131,7 +139,18 @@ const SingleMoviePage = (): JSX.Element => {
           <p>
             price: <span>{formatPrice(price)}</span>{" "}
           </p>
-        </div>
+          <ul className="categories">
+            {categories.map((item) => (
+              <li key={item.name}>{item.name}</li>
+            ))}
+          </ul>
+        </div> */}
+        <InfoSection
+          releaseYear={releaseYear}
+          rating={rating}
+          price={price}
+          categories={categories}
+        />
         <ImgWrapper>
           <Image
             src={`/images/${image}.jpg`}
@@ -175,3 +194,67 @@ const SingleMoviePage = (): JSX.Element => {
   )
 }
 export default SingleMoviePage
+
+const InfoWrapper = styled.aside`
+  max-width: 40rem;
+  margin: 0 auto;
+  .info {
+    display: flex;
+    justify-content: space-evenly;
+    p {
+      font-size: 1.35em;
+      span {
+        color: ${colorsMain.highlight};
+        font-weight: bold;
+      }
+    }
+  }
+  .categories {
+    display: flex;
+    list-style: square;
+    justify-content: space-evenly;
+    padding: 0.25rem 0;
+    li {
+      font-size: 1.25rem;
+      text-transform: capitalize;
+      &::first-letter {
+        color: ${colorsMain.primary};
+      }
+    }
+  }
+`
+
+interface InfoSectionProps {
+  releaseYear: number
+  rating: number
+  price: number
+  categories: Category[]
+}
+
+const InfoSection: FC<InfoSectionProps> = ({
+  releaseYear,
+  rating,
+  price,
+  categories,
+}): JSX.Element => {
+  return (
+    <InfoWrapper>
+      <div className="info">
+        <p>
+          year: <span>{releaseYear}</span>{" "}
+        </p>
+        <p>
+          rating: <span>{generateStars(rating)}</span>{" "}
+        </p>
+        <p>
+          price: <span>{formatPrice(price)}</span>{" "}
+        </p>
+      </div>
+      <ul className="categories">
+        {categories.map((item) => (
+          <li key={item.name}>{item.name}</li>
+        ))}
+      </ul>
+    </InfoWrapper>
+  )
+}
