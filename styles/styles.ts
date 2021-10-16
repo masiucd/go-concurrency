@@ -40,6 +40,7 @@ export const sizes = {
   h3: "var(--h3)",
   h4: "var(--h4)",
   h5: "var(--h5)",
+  button: "var(--button-size)",
   maxWidth: "var(--maxWidth)",
   headerHeight: "var(--header-height)",
   footerHeight: "var(--footer-height)",

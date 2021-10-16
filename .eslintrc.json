@@ -23,7 +23,7 @@
     "react/prop-types": 0,
     "sort-imports": [2, {"ignoreDeclarationSort": true, "ignoreCase": true}],
     "simple-import-sort/imports": 2,
-    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 2,
     "react-hooks/rules-of-hooks": 2,
     "react-hooks/exhaustive-deps": 2,
     "react/jsx-filename-extension": [1, {"extensions": [".js", ".jsx", ".tsx"]}], //should add ".ts" if typescript project
