@@ -19,6 +19,9 @@ export const getMovies = (t: QueryT): void => {
           categories: true,
           comments: true,
         },
+        orderBy: {
+          rating: "desc",
+        },
       })
     },
   })

@@ -8,7 +8,7 @@ import {motion} from "framer-motion"
 import gql from "graphql-tag"
 import Head from "next/head"
 import Link from "next/link"
-import React, {Fragment} from "react"
+import React, {Fragment, useState} from "react"
 
 const capString = (input: string): string => input[0].toUpperCase() + input.toLowerCase().slice(1)
 
@@ -80,14 +80,25 @@ const ListItem = styled(motion.li)`
     max-height: 9rem;
   }
 `
+interface Pagination {
+  moviesSkip: number
+  moviesTake: number
+  isDisabled: boolean
+}
 
 const MoviesPage = () => {
-  const {data, error, loading, fetchMore} = useQuery<MovieData>(MOVIES_QUERY, {
-    fetchPolicy: "cache-and-network",
+  const [pagination, setPagination] = useState<Pagination>({
+    moviesSkip: 0,
+    moviesTake: 3,
+    isDisabled: false,
+  })
+  const Foo = 0
+  const {data, error, loading, fetchMore, networkStatus} = useQuery<MovieData>(MOVIES_QUERY, {
     variables: {
-      moviesSkip: 0,
-      moviesTake: 2,
+      moviesSkip: pagination.moviesSkip,
+      moviesTake: pagination.moviesTake,
     },
+    notifyOnNetworkStatusChange: true,
   })
 
   if (loading) {
@@ -96,6 +107,8 @@ const MoviesPage = () => {
   if (error) {
     return <div>Error: {error.message}</div>
   }
+
+  console.log(Foo)
 
   return (
     <Fragment>
@@ -121,26 +134,55 @@ const MoviesPage = () => {
           />
 
           <MoviesList>
-            {data?.movies.map(({id, title, slug}) => (
-              <ListItem
-                key={id}
-                whileHover={{
-                  opacity: 0.65,
-                  letterSpacing: "0.05cm",
-                  color: colorsMain.highlight,
-                }}
-                transition={{
-                  duration: 0.2,
-                  damping: 5,
+            {data?.movies.map(({id, title, slug}) => {
+              return (
+                <ListItem
+                  key={id}
+                  whileHover={{
+                    opacity: 0.65,
+                    letterSpacing: "0.05cm",
+                    color: colorsMain.highlight,
+                  }}
+                  transition={{
+                    duration: 0.2,
+                    damping: 5,
+                  }}
+                >
+                  <Link href={`/movies/${slug}`}>
+                    <a>{capString(title)}</a>
+                  </Link>
+                </ListItem>
+              )
+            })}
+            <ListItem>
+              <button
+                disabled={pagination.isDisabled}
+                onClick={() => {
+                  fetchMore({
+                    query: MOVIES_QUERY,
+                    variables: {
+                      moviesSkip: pagination.moviesSkip + 3,
+                      moviesTake: 3,
+                    },
+                    updateQuery: (prev, {fetchMoreResult, variables}) => {
+                      setPagination((prev) => ({
+                        ...prev,
+                        moviesSkip: variables?.moviesSkip + 3,
+                      }))
+                      if (!fetchMoreResult?.movies.length) {
+                        setPagination((prev) => ({...prev, isDisabled: true}))
+                        return prev
+                      }
+
+                      return Object.assign({}, prev, {
+                        movies: [...fetchMoreResult.movies],
+                      })
+                    },
+                  })
                 }}
               >
-                <Link href={`/movies/${slug}`}>
-                  <a>{capString(title)}</a>
-                </Link>
-              </ListItem>
-            ))}
-            <ListItem>
-              <button>More</button>
+                More
+              </button>
             </ListItem>
           </MoviesList>
         </Section>
