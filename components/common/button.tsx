@@ -10,6 +10,10 @@ export const resetBtnStyles = css`
   outline: 0;
   border-radius: 3px;
   cursor: pointer;
+  :disabled {
+    opacity: 0.5;
+    color: #fff;
+  }
 `
 
 export const ButtonPrimary = styled(motion.button)`

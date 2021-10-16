@@ -9,7 +9,7 @@ import {motion} from "framer-motion"
 import gql from "graphql-tag"
 import Head from "next/head"
 import Link from "next/link"
-import React, {Fragment, useState} from "react"
+import {Fragment, useState} from "react"
 
 const capString = (input: string): string => input[0].toUpperCase() + input.toLowerCase().slice(1)
 
@@ -41,6 +41,23 @@ interface MovieData {
   movies: Array<Movie>
 }
 
+const captureStyles = css`
+  .text-part {
+    font-size: 8rem;
+  }
+  @media ${above.tabletXL} {
+    padding-right: 2rem;
+  }
+  @media ${below.tabletXL} {
+    .text-part {
+      font-size: 6rem;
+    }
+    h3 {
+      height: 8rem;
+    }
+  }
+`
+
 const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
@@ -56,9 +73,10 @@ const Section = styled.section`
 `
 
 const MoviesList = styled.ul`
-  padding: 1rem 0;
+  padding: 2rem 0;
   display: flex;
   flex-flow: column wrap;
+  justify-content: center;
   @media ${above.tabletXL} {
     padding-left: 2rem;
   }
@@ -87,7 +105,7 @@ interface Pagination {
   isDisabled: boolean
 }
 
-const MoviesPage = () => {
+const MoviesPage = (): JSX.Element => {
   const [pagination, setPagination] = useState<Pagination>({
     moviesSkip: 0,
     moviesTake: 3,
@@ -116,24 +134,7 @@ const MoviesPage = () => {
       </Head>
       <Wrapper>
         <Section>
-          <Capture
-            incomingStyles={css`
-              .text-part {
-                font-size: 8rem;
-              }
-              @media ${above.tabletXL} {
-                padding-right: 2rem;
-              }
-              @media ${below.tabletXL} {
-                .text-part {
-                  font-size: 6rem;
-                }
-                h3 {
-                  height: 8rem;
-                }
-              }
-            `}
-          />
+          <Capture incomingStyles={captureStyles} />
 
           <MoviesList>
             {data?.movies.map(({id, title, slug}) => {
@@ -161,12 +162,9 @@ const MoviesPage = () => {
                 margin-top: auto;
               `}
             >
-              <ButtonPrimary
-                whileHover={{
-                  opacity: 0.75,
-                }}
-                disabled={pagination.isDisabled}
-                onClick={() => {
+              <CheckForMoreMoviesButton
+                isDisabled={pagination.isDisabled}
+                fetchMore={() => {
                   fetchMore({
                     query: MOVIES_QUERY,
                     variables: {
@@ -189,14 +187,33 @@ const MoviesPage = () => {
                     },
                   })
                 }}
-              >
-                Check for more movies
-              </ButtonPrimary>
+              />
             </ListItem>
           </MoviesList>
         </Section>
       </Wrapper>
     </Fragment>
+  )
+}
+
+interface CheckForMoreMoviesButtonProps {
+  isDisabled: boolean
+  fetchMore: () => void
+}
+
+function CheckForMoreMoviesButton({isDisabled, fetchMore}: CheckForMoreMoviesButtonProps) {
+  return isDisabled ? (
+    <ButtonPrimary>fsdfsdf</ButtonPrimary>
+  ) : (
+    <ButtonPrimary
+      whileHover={{
+        opacity: 0.75,
+      }}
+      disabled={isDisabled}
+      onClick={fetchMore}
+    >
+      Check for more movies
+    </ButtonPrimary>
   )
 }
 

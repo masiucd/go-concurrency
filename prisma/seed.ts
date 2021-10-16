@@ -2,7 +2,7 @@
 
 import prisma from "../lib/prisma"
 
-export async function main() {
+export async function main(): Promise<void> {
   try {
     await prisma.$queryRaw`
     INSERT INTO movie ( title, releaseYear, price, rating,image,slug)

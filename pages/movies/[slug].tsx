@@ -88,7 +88,7 @@ const StyledMovie = styled.section`
   }
 `
 
-const SingleMoviePage = () => {
+const SingleMoviePage = (): JSX.Element => {
   const {query} = useRouter()
   const {data, loading, error} = useQuery<MovieDataResponse>(GET_MOVIE_QUERY, {
     variables: {
@@ -104,7 +104,7 @@ const SingleMoviePage = () => {
   }
 
   const {title, image, releaseYear, rating, price, categories} = data?.movieItem ?? fallBackRecord
-  console.log("image", image)
+
   return (
     <Fragment>
       <Link href="/movies">
