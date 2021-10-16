@@ -1,4 +1,5 @@
 import {useQuery} from "@apollo/client"
+import {ButtonPrimary} from "@components/common/button"
 import Capture from "@components/common/capture"
 import {css} from "@emotion/react"
 import styled from "@emotion/styled"
@@ -55,7 +56,7 @@ const Section = styled.section`
 `
 
 const MoviesList = styled.ul`
-  padding: 2rem 0;
+  padding: 1rem 0;
   display: flex;
   flex-flow: column wrap;
   @media ${above.tabletXL} {
@@ -72,7 +73,7 @@ const ListItem = styled(motion.li)`
   text-overflow: ellipsis;
   margin: 0;
   padding: 0;
-  font-size: 8rem;
+  font-size: 4.5rem;
 
   @media ${above.tabletXL} {
     max-width: 600px;
@@ -92,8 +93,8 @@ const MoviesPage = () => {
     moviesTake: 3,
     isDisabled: false,
   })
-  const Foo = 0
-  const {data, error, loading, fetchMore, networkStatus} = useQuery<MovieData>(MOVIES_QUERY, {
+
+  const {data, error, loading, fetchMore} = useQuery<MovieData>(MOVIES_QUERY, {
     variables: {
       moviesSkip: pagination.moviesSkip,
       moviesTake: pagination.moviesTake,
@@ -107,8 +108,6 @@ const MoviesPage = () => {
   if (error) {
     return <div>Error: {error.message}</div>
   }
-
-  console.log(Foo)
 
   return (
     <Fragment>
@@ -127,7 +126,10 @@ const MoviesPage = () => {
               }
               @media ${below.tabletXL} {
                 .text-part {
-                  font-size: 8rem;
+                  font-size: 6rem;
+                }
+                h3 {
+                  height: 8rem;
                 }
               }
             `}
@@ -154,8 +156,15 @@ const MoviesPage = () => {
                 </ListItem>
               )
             })}
-            <ListItem>
-              <button
+            <ListItem
+              css={css`
+                margin-top: auto;
+              `}
+            >
+              <ButtonPrimary
+                whileHover={{
+                  opacity: 0.75,
+                }}
                 disabled={pagination.isDisabled}
                 onClick={() => {
                   fetchMore({
@@ -181,8 +190,8 @@ const MoviesPage = () => {
                   })
                 }}
               >
-                More
-              </button>
+                Check for more movies
+              </ButtonPrimary>
             </ListItem>
           </MoviesList>
         </Section>

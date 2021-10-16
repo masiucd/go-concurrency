@@ -45,6 +45,7 @@ const GlobalStyles = () => {
           --maxWidth: 110rem;
           --header-height: 10rem;
           --footer-height: 10rem;
+          --button-size: 1rem;
 
           /* border-radius */
           --border-radius-s: 3px;

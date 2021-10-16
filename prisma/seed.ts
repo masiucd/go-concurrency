@@ -61,6 +61,14 @@ export async function main() {
         3,
         'the-football-factory',
         'the-football-factory','
+      ),
+       (
+        'Rambo',
+        1994,
+        23500,
+        3,
+        'rambo',
+        'rambo','
       );
     `
     await prisma.$queryRaw`
