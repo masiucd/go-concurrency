@@ -10,6 +10,7 @@ export const resetBtnStyles = css`
   outline: 0;
   border-radius: 3px;
   cursor: pointer;
+  background-color: transparent;
   :disabled {
     opacity: 0.5;
     color: #fff;
@@ -21,7 +22,6 @@ export const ButtonPrimary = styled(motion.button)`
   font-size: ${sizes.button};
   padding: 0.35rem;
   border: 2px solid ${colorsMain.highlight};
-  background-color: transparent;
   color: ${colorsMain.text};
   height: 2.5rem;
   width: 7rem;
