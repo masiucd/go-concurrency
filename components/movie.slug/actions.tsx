@@ -9,17 +9,20 @@ const styles = css`
   display: flex;
   justify-content: space-between;
 `
-
-const Actions = (): JSX.Element => (
+interface ActionsProps {
+  toggleLeaveReview: () => void
+}
+const Actions = ({toggleLeaveReview}: ActionsProps): JSX.Element => (
   <div css={styles}>
     <ButtonPrimary
       whileHover={{
-        width: "7em",
+        width: "7.5em",
       }}
     >
       Add to cart
     </ButtonPrimary>
     <ButtonPrimary
+      onClick={toggleLeaveReview}
       css={css`
         width: 8rem;
       `}

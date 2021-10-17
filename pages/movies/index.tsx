@@ -57,9 +57,9 @@ const captureStyles = css`
     }
   }
 `
-const borderStyle = css`
-  border-top-left-radius: 37px 140px;
-  border-top-right-radius: 23px 130px;
+const borderStyle = (isInner = false) => css`
+  border-top-left-radius: ${isInner ? "6px 110px" : "37px 140px"};
+  border-top-right-radius: ${isInner ? "6px 20px" : "23px 130px"};
   border-bottom-left-radius: 110px 19px;
   border-bottom-right-radius: 120px 24px;
 `
@@ -82,7 +82,7 @@ const Movies = styled.div`
   background-color: ${styles.bgNuisances.bg900};
   position: relative;
   border: 2px solid ${styles.colorsMain.highlight};
-  ${borderStyle};
+  ${borderStyle()};
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -102,8 +102,7 @@ const MoviesList = styled.ul`
   padding: 2rem;
   min-height: 32rem;
   max-height: 32rem;
-  border: 1px solid ${styles.bgNuisances.bg200};
-  ${borderStyle};
+  ${borderStyle(true)};
   @media ${below.tabletXL} {
     font-size: 2.65rem;
     min-height: 35rem;
@@ -120,22 +119,19 @@ const ListItem = styled(motion.li)`
   }
 `
 interface Pagination {
-  moviesSkip: number
   moviesTake: number
   isDisabled: boolean
 }
 
 const MoviesPage = (): JSX.Element => {
   const [pagination, setPagination] = useState<Pagination>({
-    moviesSkip: 0,
     moviesTake: 3,
     isDisabled: false,
   })
 
   const {data, error, loading, fetchMore} = useQuery<MovieData>(MOVIES_QUERY, {
     variables: {
-      moviesSkip: pagination.moviesSkip,
-      moviesTake: pagination.moviesTake,
+      moviesTake: 3,
     },
     notifyOnNetworkStatusChange: true,
   })
@@ -198,7 +194,6 @@ const MoviesPage = (): JSX.Element => {
                     if (data?.movies.length === fetchMoreResult?.movies.length) {
                       setPagination((prev) => ({...prev, isDisabled: true}))
                     }
-
                     return Object.assign({}, prev, {
                       movies: [...fetchMoreResult.movies],
                     })

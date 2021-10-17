@@ -1,14 +1,20 @@
 import {useQuery} from "@apollo/client"
 import Actions from "@components/movie.slug/actions"
 import InfoSection from "@components/movie.slug/info.section"
-import {JSX} from "@emotion/react/jsx-runtime"
+// import LeaveReview from "@components/movie.slug/leave.review.dialog"
+import {css} from "@emotion/react"
 import styled from "@emotion/styled"
-import {bgNuisances} from "@styles/styles"
+import useToggle from "@hooks/toggle"
+import * as styles from "@styles/styles"
+import {motion} from "framer-motion"
 import gql from "graphql-tag"
+import dynamic from "next/dynamic"
 import Image from "next/image"
 import Link from "next/link"
 import {useRouter} from "next/router"
 import {Fragment} from "react"
+
+const LeaveReview = dynamic(() => import("@components/movie.slug/leave.review.dialog"))
 
 interface Category {
   name: string
@@ -80,8 +86,9 @@ const StyledMovie = styled.section`
   border-radius: 122px 3px 122px 6px;
   max-width: 50em;
   margin: 0 auto;
-  background-color: ${bgNuisances.bg900};
+  background-color: ${styles.bgNuisances.bg900};
   padding: 1rem 0;
+  position: relative;
   h3 {
     font-size: 9rem;
     text-align: center;
@@ -90,6 +97,7 @@ const StyledMovie = styled.section`
 
 const SingleMoviePage = (): JSX.Element => {
   const {query} = useRouter()
+  const [open, {toggle}] = useToggle()
   const {data, loading, error} = useQuery<MovieDataResponse>(GET_MOVIE_QUERY, {
     variables: {
       movieSlug: query.slug,
@@ -102,16 +110,13 @@ const SingleMoviePage = (): JSX.Element => {
   if (error) {
     return <div>Error: {error.message}</div>
   }
-
   const {title, image, releaseYear, rating, price, categories} = data?.movieItem ?? fallBackRecord
 
   return (
     <Fragment>
-      <Link href="/movies">
-        <a> &#8592; Movies</a>
-      </Link>
-
+      <LeaveReview open={open} toggle={toggle} />
       <StyledMovie>
+        <LinkBack />
         <h3>{title}</h3>
 
         <InfoSection
@@ -130,9 +135,29 @@ const SingleMoviePage = (): JSX.Element => {
             layout="fixed"
           />
         </ImgWrapper>
-        <Actions />
+        <Actions toggleLeaveReview={toggle} />
       </StyledMovie>
     </Fragment>
   )
 }
 export default SingleMoviePage
+
+function LinkBack() {
+  return (
+    <motion.div
+      whileHover={{width: "6.5rem"}}
+      css={css`
+        position: absolute;
+        right: 1rem;
+        border: 2px solid ${styles.colorsMain.highlight};
+        width: 6rem;
+        text-align: center;
+        border-radius: 4px;
+      `}
+    >
+      <Link href="/movies">
+        <a> &#8592; Movies</a>
+      </Link>
+    </motion.div>
+  )
+}

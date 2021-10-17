@@ -20,7 +20,9 @@ export const ButtonPrimary = styled(motion.button)`
   ${resetBtnStyles};
   font-size: ${sizes.button};
   padding: 0.35rem;
-  background-color: ${colorsMain.highlight};
+  border: 2px solid ${colorsMain.highlight};
+  background-color: transparent;
+  color: ${colorsMain.text};
   height: 2.5rem;
-  width: 6rem;
+  width: 7rem;
 `

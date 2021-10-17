@@ -1,7 +1,7 @@
 import Document, {Head, Html, Main, NextScript} from "next/document"
 
 class MyDocument extends Document {
-  render() {
+  render(): JSX.Element {
     return (
       <Html>
         <Head>
@@ -21,6 +21,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <div id="portal" />
         </body>
       </Html>
     )
