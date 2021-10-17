@@ -4,7 +4,7 @@ import Capture from "@components/common/capture"
 import {css} from "@emotion/react"
 import styled from "@emotion/styled"
 import {above, below} from "@styles/media-query"
-import {bgNuisances, colorsMain} from "@styles/styles"
+import * as styles from "@styles/styles"
 import {motion} from "framer-motion"
 import gql from "graphql-tag"
 import Head from "next/head"
@@ -57,6 +57,12 @@ const captureStyles = css`
     }
   }
 `
+const borderStyle = css`
+  border-top-left-radius: 37px 140px;
+  border-top-right-radius: 23px 130px;
+  border-bottom-left-radius: 110px 19px;
+  border-bottom-right-radius: 120px 24px;
+`
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,36 +74,50 @@ const Section = styled.section`
   display: grid;
   grid-template-columns: 1fr;
   @media ${above.tabletXL} {
+    grid-gap: 10px;
     grid-template-columns: 1fr 1fr;
   }
 `
 const Movies = styled.div`
-  background-color: ${bgNuisances.bg900};
+  background-color: ${styles.bgNuisances.bg900};
   position: relative;
+  border: 2px solid ${styles.colorsMain.highlight};
+  ${borderStyle};
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
   @media ${below.tabletXL} {
-    min-height: 40rem;
+    min-height: 45rem;
   }
 `
 
 const MoviesList = styled.ul`
+  background-color: ${styles.bgNuisances.bg800};
   display: flex;
   flex-flow: column;
   justify-content: center;
   border-radius: 4px;
-
-  overflow: auto;
+  overflow-y: scroll;
   padding-left: 2rem;
   padding: 2rem;
-  max-height: 35rem;
+  min-height: 32rem;
+  max-height: 32rem;
+  border: 1px solid ${styles.bgNuisances.bg200};
+  ${borderStyle};
+  @media ${below.tabletXL} {
+    font-size: 2.65rem;
+    min-height: 35rem;
+    max-height: 35rem;
+  }
 `
 
 const ListItem = styled(motion.li)`
   font-weight: bold;
-  margin-left: 1rem;
-  white-space: nowrap;
-  margin: 0;
-  padding: 0;
-  font-size: 4.1rem;
+  font-size: 4rem;
+  max-height: 5rem;
+  @media ${below.tabletXL} {
+    font-size: 2.65rem;
+  }
 `
 interface Pagination {
   moviesSkip: number
@@ -145,7 +165,7 @@ const MoviesPage = (): JSX.Element => {
                     whileHover={{
                       opacity: 0.65,
                       letterSpacing: "0.02cm",
-                      color: colorsMain.highlight,
+                      color: styles.colorsMain.highlight,
                     }}
                     transition={{
                       duration: 0.2,
@@ -203,10 +223,8 @@ function CheckForMoreMoviesButton({isDisabled, fetchMore}: CheckForMoreMoviesBut
     <div
       css={css`
         position: absolute;
-        /* padding-top: 0.9rem; */
-        /* z-index: 20; */
-
-        bottom: 0;
+        bottom: 1rem;
+        left: 1rem;
         @media ${above.tabletXL} {
         }
       `}

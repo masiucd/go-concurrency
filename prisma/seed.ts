@@ -69,6 +69,14 @@ export async function main(): Promise<void> {
         3,
         'rambo',
         'rambo','
+      ),
+       (
+        'Titanic',
+        1994,
+        53500,
+        3,
+        'titanic',
+        'titanic','
       );
     `
     await prisma.$queryRaw`
