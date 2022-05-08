@@ -12,7 +12,7 @@ func run() {
 	start := time.Now()
 	go goForARun(&wg)
 	go swiming(&wg)
-	wg.Wait() // block the code until finishes
+	wg.Wait() // block the code until done
 
 	fmt.Println("Guess we are done!!")
 	elapsed := time.Since(start)
