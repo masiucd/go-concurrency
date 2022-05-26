@@ -1,4 +1,4 @@
-package main
+package goroutines
 
 import (
 	"fmt"
@@ -15,7 +15,8 @@ func greeting() {
 	fmt.Println("Hello")
 }
 
-func main() {
+// Init init
+func Init() {
 
 	go run()      // pushed to the stack
 	go greeting() // pushed to the stack
